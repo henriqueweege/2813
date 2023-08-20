@@ -19,8 +19,8 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
-    - name: just test
-      run: dotnet build-server shutdown --msbuild
+    #- name: just test
+    #  run: dotnet build-server shutdown --msbuild
     - name: Restore dependencies
       run: dotnet restore --project DependencyRoomBooking.sln
     - name: Build
