@@ -22,7 +22,7 @@ jobs:
     - name: just test
       run: dotnet build-server shutdown --msbuild
     - name: Restore dependencies
-      run: dotnet restore Demos/06 - exercicios/DependencyRoomBooking.sln
+      run: dotnet restore --project DependencyRoomBooking.sln
     - name: Build
       run: dotnet build --no-restore --solution Demos/06 - exercicios/DependencyRoomBooking.sln
     - name: Test
