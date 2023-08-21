@@ -1,13 +1,20 @@
-﻿using RoomBooking.Domain.Entities.Contracts;
+﻿using RoomBooking.Domain.Entities.Base;
 using System.ComponentModel.DataAnnotations;
 
 namespace RoomBooking.Domain.Entities;
 
-public class Room
+public class Room : Entity
 {
+    public string Name { get; private set; }
+    public Room(string name)
+    {
+        Name = name;
+    }
+
+    public bool ChangeName(string name)
+    {
+        Name = name;
+        return true;
+    }
 }
-public record RoomModel(string Name) : IModel
-{
-    [Key]
-    public Guid Id { get; init; }
-}
+

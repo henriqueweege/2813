@@ -1,13 +1,18 @@
-﻿using RoomBooking.Domain.Entities.Contracts;
-using System.ComponentModel.DataAnnotations;
+﻿using RoomBooking.Domain.Entities.Base;
 
 namespace RoomBooking.Domain.Entities;
 
-public class Customer
+public class Customer : Entity
 {
-}
-public record CustomerModel(string Email) : IModel
-{
-    [Key]
-    public Guid Id { get; init; }
+    public string Email { get; private set; }
+    public Customer(string email)
+    {
+        Email = email;
+    }
+
+    public bool ChangeEmail(string email)
+    {
+        Email= email;
+        return true;
+    }
 }

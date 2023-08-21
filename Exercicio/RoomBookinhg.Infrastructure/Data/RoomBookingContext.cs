@@ -15,7 +15,7 @@ public class RoomBookingContext : DbContext, IDataContext
         dbContextOptionsBuilder.UseInMemoryDatabase(databaseName: "inMemoryDb");
 
     }
-    public DbSet<BookModel> BookModels { get; set; }
-    public DbSet<RoomModel> RoomModels { get; set; }
-    public DbSet<CustomerModel> CustomerModels { get; set; }
+    public DbSet<Book> Books { get; set; }
+    public DbSet<Room> Rooms { get; set; }
+    public DbSet<Customer> Customers { get; set; }
 }

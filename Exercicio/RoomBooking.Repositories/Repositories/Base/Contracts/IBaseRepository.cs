@@ -1,12 +1,13 @@
-﻿using RoomBooking.Domain.Entities.Contracts;
+﻿
+using RoomBooking.Domain.Entities.Base;
 
 namespace RoomBooking.Domain.Repositories.Base.Contracts;
 
-public interface IBaseRepository<M> where M : class, IModel
+public interface IBaseRepository<E> where E : Entity
 {
-    public M? Save(M model);
-    public M? GetById(Guid id);
-    public IEnumerable<M> GetAll();
-    public M? Update(M model);
-    public bool Delete(M id);
+    public E? Save(E model);
+    public E? GetById(Guid id);
+    public IEnumerable<E> GetAll();
+    public E? Update(E model);
+    public bool Delete(E id);
 }

@@ -8,7 +8,6 @@ namespace Repositories_UnitTests;
 public class CustomerRepository_UnitTests : IDisposable
 {
     private readonly CustomerRepository _repository;
-    private readonly DateTime _date;
     private readonly string _email;
     public CustomerRepository_UnitTests()
     {
@@ -18,13 +17,12 @@ public class CustomerRepository_UnitTests : IDisposable
     }
 
     [Fact]
-    public void GivenRoomWithValidInformation_ShouldSave()
+    public void GivenBookWithValidInformation_ShouldSave()
     {
         //arrange
-        var model = new CustomerModel(_email) { Id = Guid.NewGuid() };
-
+        var tosave = new Customer(_email);
         //act
-        var saved = _repository.Save(model);
+        var saved = _repository.Save(tosave);
 
         //assert
         Assert.NotNull(saved);
@@ -35,43 +33,42 @@ public class CustomerRepository_UnitTests : IDisposable
     public void GivenValidId_GetByIdShouldReturnEntity()
     {
         //arrange
-        var id = Guid.NewGuid();
-        var model = new CustomerModel(_email) { Id = id };
-        _repository.Save(model);
+        var tosave = new Customer(_email);
+        var saved = _repository.Save(tosave);
 
         //act
-        var entity = _repository.GetById(id);
+        var entity = _repository.GetById(saved.Id);
 
         //assert
-        Assert.Equal(id, entity.Id);
+        Assert.Equal(saved.Id, entity.Id);
     }
 
     [Fact]
     public void GivenValidInformation_UpdateShouldReturnUpdatedEntity()
     {
         //arrange
-        var id = Guid.NewGuid();
-        var model = new CustomerModel(_email) { Id = id };
-        _repository.Save(model);
+        var saved = _repository.Save(new Customer(_email));
+        var id = saved.Id;
+        var initialEmail = saved.Email;
 
         //act
-        var newName = Guid.NewGuid().ToString();
-        var updated = _repository.Update(model with { Email = newName });
+        saved.ChangeEmail(Guid.NewGuid().ToString());
+        var updated = _repository.Update(saved);
 
         //assert
         var entity = _repository.GetById(id);
         Assert.NotNull(updated);
         Assert.Equal(id, entity.Id);
-        Assert.DoesNotMatch(model.Email, entity.Email);
+        Assert.DoesNotMatch(initialEmail.ToString(), entity.Email.ToString());
     }
 
     [Fact]
     public void GivenMoreThenOneEntitySaved_GetAllShouldShouldReturnMoreThanOne()
     {
         //arrange
-        _repository.Save(new CustomerModel(_email) { Id = Guid.NewGuid() });
-        _repository.Save(new CustomerModel(_email) { Id = Guid.NewGuid() });
-        _repository.Save(new CustomerModel(_email) { Id = Guid.NewGuid() });
+        _repository.Save(new Customer(_email));
+        _repository.Save(new Customer(_email));
+        _repository.Save(new Customer(_email));
 
         //act
         var entities = _repository.GetAll();
@@ -84,12 +81,11 @@ public class CustomerRepository_UnitTests : IDisposable
     public void GivenCallToDelete_ShouldRemoveEntity()
     {
         //arrange
-        var id = Guid.NewGuid();
-        var model = new CustomerModel(_email) { Id = Guid.NewGuid() };
-        _repository.Save(model);
+        var saved = _repository.Save(new Customer(_email));
+        var id = saved.Id;
 
         //act
-        var removed = _repository.Delete(model);
+        var removed = _repository.Delete(saved);
 
         //assert
         var entity = _repository.GetById(id);

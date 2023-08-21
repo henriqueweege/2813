@@ -5,74 +5,72 @@ using RoomBookinhg.Infrastructure.Data;
 
 namespace Repositories_UnitTests;
 
-public class BookRepository_UnitTests : IDisposable 
+public class BookRepository_UnitTests : IDisposable
 {
-	private readonly BookRepository _repository;
+    private readonly BookRepository _repository;
     private readonly DateTime _date;
     private readonly string _email;
-	public BookRepository_UnitTests()
-	{
-		var context = new RoomBookingContext(new DbContextOptionsBuilder());
-		_repository = new BookRepository(context);
+    public BookRepository_UnitTests()
+    {
+        var context = new RoomBookingContext(new DbContextOptionsBuilder());
+        _repository = new BookRepository(context);
         _date = DateTime.Now;
         _email = "email@email.com";
-	}
+    }
 
-	[Fact]
-	public void GivenBookWithValidInformation_ShouldSave()
-	{
-		//arrange
-		var model = new BookModel(_email, Guid.NewGuid(), _date) { Id = Guid.NewGuid()};
+    [Fact]
+    public void GivenBookWithValidInformation_ShouldSave()
+    {
+        //arrange
+        var tosave = new Book(_email, Guid.NewGuid(), _date);
+        //act
+        var saved = _repository.Save(tosave);
 
-		//act
-		var saved = _repository.Save(model);
+        //assert
+        Assert.NotNull(saved);
 
-		//assert
-		Assert.NotNull(saved);
-	
-	}
+    }
 
     [Fact]
     public void GivenValidId_GetByIdShouldReturnEntity()
     {
-		//arrange
-        var id = Guid.NewGuid();
-        var model = new BookModel(_email, Guid.NewGuid(), _date) { Id = id};
-        _repository.Save(model);
+        //arrange
+        var tosave = new Book(_email, Guid.NewGuid(), _date);
+        var saved = _repository.Save(tosave);
 
         //act
-		var entity = _repository.GetById(id);
+        var entity = _repository.GetById(saved.Id);
 
         //assert
-        Assert.Equal(id, entity.Id);
+        Assert.Equal(saved.Id, entity.Id);
     }
 
     [Fact]
     public void GivenValidInformation_UpdateShouldReturnUpdatedEntity()
     {
         //arrange
-        var id = Guid.NewGuid();
-        var model = new BookModel(_email, Guid.NewGuid(), _date) { Id = id};
-        _repository.Save(model);
+        var saved = _repository.Save(new Book(_email, Guid.NewGuid(), _date));
+        var id = saved.Id;
+        var initialRoomId = saved.RoomId;
 
         //act
-        var newRoomId = Guid.NewGuid();
-        var updated = _repository.Update(model with { Room = newRoomId });
+        saved.ChangeRoomId(Guid.NewGuid());
+        var updated = _repository.Update(saved);
 
         //assert
         var entity = _repository.GetById(id);
         Assert.NotNull(updated);
         Assert.Equal(id, entity.Id);
-        Assert.DoesNotMatch(model.Room.ToString(), entity.Room.ToString());
+        Assert.DoesNotMatch(initialRoomId.ToString(), entity.RoomId.ToString());
     }
 
     [Fact]
     public void GivenMoreThenOneEntitySaved_GetAllShouldShouldReturnMoreThanOne()
     {
         //arrange
-        _repository.Save(new BookModel(_email, Guid.NewGuid(), _date){Id = Guid.NewGuid()});
-        _repository.Save(new BookModel(_email, Guid.NewGuid(), _date){Id = Guid.NewGuid()});
-        _repository.Save(new BookModel(_email, Guid.NewGuid(), _date) { Id = Guid.NewGuid() });
+        _repository.Save(new Book(_email, Guid.NewGuid(), _date));
+        _repository.Save(new Book(_email, Guid.NewGuid(), _date));
+        _repository.Save(new Book(_email, Guid.NewGuid(), _date));
 
         //act
         var entities = _repository.GetAll();
@@ -85,12 +83,11 @@ public class BookRepository_UnitTests : IDisposable
     public void GivenCallToDelete_ShouldRemoveEntity()
     {
         //arrange
-        var id = Guid.NewGuid();
-        var model = new BookModel(_email, Guid.NewGuid(), _date) { Id = id };
-        _repository.Save(model);
+        var saved = _repository.Save(new Book(_email, Guid.NewGuid(), _date));
+        var id = saved.Id;
 
         //act
-        var removed = _repository.Delete(model);
+        var removed = _repository.Delete(saved);
 
         //assert
         var entity = _repository.GetById(id);

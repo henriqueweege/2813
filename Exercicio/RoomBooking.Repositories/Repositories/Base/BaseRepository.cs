@@ -1,32 +1,32 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using RoomBooking.Domain.Entities.Contracts;
+using RoomBooking.Domain.Entities.Base;
 using RoomBooking.Domain.Repositories.Base.Contracts;
 using RoomBookinhg.Infrastructure.Data;
 using RoomBookinhg.Infrastructure.Data.Contracts;
 
 namespace RoomBooking.Domain.Repositories.Base;
 
-public class BaseRepository<M> : IDisposable, IBaseRepository<M> where M : class, IModel
+public class BaseRepository<E> : IDisposable, IBaseRepository<E> where E : Entity
 {
     private RoomBookingContext Context { get; set; }
-    private DbSet<M> EntitySet { get;set; }
+    private DbSet<E> EntitySet { get;set; }
     public BaseRepository(IDataContext context)
     {
         Context = (RoomBookingContext)context;
-        EntitySet = Context.Set<M>();
+        EntitySet = Context.Set<E>();
     }
-    public bool Delete(M model) 
+    public bool Delete(E model) 
     {
         Context.Remove(model);
         return SaveChanges().Result > 0;
     }  
 
-    public IEnumerable<M> GetAll() => EntitySet.ToList();
+    public IEnumerable<E> GetAll() => EntitySet.ToList();
 
-    public M? GetById(Guid id) => EntitySet.FirstOrDefault(entity => entity.Id == id);
+    public E? GetById(Guid id) => EntitySet.FirstOrDefault(entity => entity.Id == id);
 
-    public M? Save(M model)
+    public E? Save(E model)
     {
         Context.Add(model);
         if (Saved())
@@ -36,7 +36,7 @@ public class BaseRepository<M> : IDisposable, IBaseRepository<M> where M : class
         }
         return null;
     }
-    public M? Update(M model)
+    public E? Update(E model)
     {
         Context.Update(model);
         if (Saved())

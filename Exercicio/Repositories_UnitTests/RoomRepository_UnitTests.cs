@@ -18,13 +18,12 @@ public class RoomRepository_UnitTests : IDisposable
     }
 
     [Fact]
-    public void GivenRoomWithValidInformation_ShouldSave()
+    public void GivenBookWithValidInformation_ShouldSave()
     {
         //arrange
-        var model = new RoomModel(_name) { Id = Guid.NewGuid() };
-
+        var tosave = new Room(_name);
         //act
-        var saved = _repository.Save(model);
+        var saved = _repository.Save(tosave);
 
         //assert
         Assert.NotNull(saved);
@@ -35,43 +34,42 @@ public class RoomRepository_UnitTests : IDisposable
     public void GivenValidId_GetByIdShouldReturnEntity()
     {
         //arrange
-        var id = Guid.NewGuid();
-        var model = new RoomModel(_name) { Id = id };
-        _repository.Save(model);
+        var tosave = new Room(_name);
+        var saved = _repository.Save(tosave);
 
         //act
-        var entity = _repository.GetById(id);
+        var entity = _repository.GetById(saved.Id);
 
         //assert
-        Assert.Equal(id, entity.Id);
+        Assert.Equal(saved.Id, entity.Id);
     }
 
     [Fact]
     public void GivenValidInformation_UpdateShouldReturnUpdatedEntity()
     {
         //arrange
-        var id = Guid.NewGuid();
-        var model = new RoomModel(_name) { Id = id };
-        _repository.Save(model);
+        var saved = _repository.Save(new Room(_name));
+        var id = saved.Id;
+        var initialName = saved.Name;
 
         //act
-        var newName = Guid.NewGuid().ToString();
-        var updated = _repository.Update(model with { Name = newName });
+        saved.ChangeName(Guid.NewGuid().ToString());
+        var updated = _repository.Update(saved);
 
         //assert
         var entity = _repository.GetById(id);
         Assert.NotNull(updated);
         Assert.Equal(id, entity.Id);
-        Assert.DoesNotMatch(model.Name, entity.Name);
+        Assert.DoesNotMatch(initialName.ToString(), entity.Name.ToString());
     }
 
     [Fact]
     public void GivenMoreThenOneEntitySaved_GetAllShouldShouldReturnMoreThanOne()
     {
         //arrange
-        _repository.Save(new RoomModel(_name) { Id = Guid.NewGuid() });
-        _repository.Save(new RoomModel(_name) { Id = Guid.NewGuid() });
-        _repository.Save(new RoomModel(_name) { Id = Guid.NewGuid() });
+        _repository.Save(new Room(_name));
+        _repository.Save(new Room(_name));
+        _repository.Save(new Room(_name));
 
         //act
         var entities = _repository.GetAll();
@@ -84,12 +82,11 @@ public class RoomRepository_UnitTests : IDisposable
     public void GivenCallToDelete_ShouldRemoveEntity()
     {
         //arrange
-        var id = Guid.NewGuid();
-        var model = new RoomModel(_name) { Id = Guid.NewGuid() };
-        _repository.Save(model);
+        var saved = _repository.Save(new Room(_name));
+        var id = saved.Id;
 
         //act
-        var removed = _repository.Delete(model);
+        var removed = _repository.Delete(saved);
 
         //assert
         var entity = _repository.GetById(id);
