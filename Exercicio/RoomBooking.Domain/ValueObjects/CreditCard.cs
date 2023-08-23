@@ -1,10 +1,11 @@
 ﻿using RoomBooking.Domain.ValueObjects.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoomBooking.Domain.ValueObjects;
 
-public record CreditCard(string Number, string Holder, string Expiration, string Cvv) : IValueObject;
+public record CreditCard : IValueObject
+{
+    public string Number { get; set; }
+    public string Holder { get; set; }
+    public string Expiration { get; set; }
+    public string Cvv { get; set; }
+} 

@@ -1,5 +1,4 @@
 ﻿using RoomBooking.Domain.Entities.Base;
-using System.ComponentModel.DataAnnotations;
 
 namespace RoomBooking.Domain.Entities;
 
@@ -11,10 +10,12 @@ public class Room : Entity
         Name = name;
     }
 
+    #region Change Methods
     public bool ChangeName(string name)
     {
         Name = name;
         return true;
     }
+    #endregion
 }
 

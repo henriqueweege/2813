@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RoomBooking.Domain.DataAccess.Repositories;
 using RoomBooking.Domain.Entities;
-using RoomBooking.Repositories.Repositories;
 using RoomBookinhg.Infrastructure.Data;
 
 namespace Repositories_UnitTests;
@@ -52,14 +52,14 @@ public class CustomerRepository_UnitTests : IDisposable
         var initialEmail = saved.Email;
 
         //act
-        saved.ChangeEmail(Guid.NewGuid().ToString());
+        saved.ChangeEmail("newmail@email.com");
         var updated = _repository.Update(saved);
 
         //assert
         var entity = _repository.GetById(id);
         Assert.NotNull(updated);
         Assert.Equal(id, entity.Id);
-        Assert.DoesNotMatch(initialEmail.ToString(), entity.Email.ToString());
+        Assert.NotEqual(initialEmail.ToString(), entity.Email.ToString());
     }
 
     [Fact]

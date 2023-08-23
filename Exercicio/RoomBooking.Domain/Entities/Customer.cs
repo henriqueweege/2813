@@ -1,4 +1,5 @@
 ﻿using RoomBooking.Domain.Entities.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace RoomBooking.Domain.Entities;
 
@@ -10,9 +11,17 @@ public class Customer : Entity
         Email = email;
     }
 
+
+    #region Change Methods
     public bool ChangeEmail(string email)
     {
-        Email= email;
-        return true;
+        var validator = new EmailAddressAttribute();
+        if (validator.IsValid(email))
+        {
+            Email = email;
+            return true;
+        }
+        return false;
     }
+    #endregion
 }

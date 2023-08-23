@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RoomBooking.Domain.DataAccess.Repositories;
 using RoomBooking.Domain.Entities;
-using RoomBooking.Repositories.Repositories;
 using RoomBookinhg.Infrastructure.Data;
 
 namespace Repositories_UnitTests;
@@ -53,7 +53,7 @@ public class RoomRepository_UnitTests : IDisposable
         var initialName = saved.Name;
 
         //act
-        saved.ChangeName(Guid.NewGuid().ToString());
+        saved.ChangeName("newmail@email.com");
         var updated = _repository.Update(saved);
 
         //assert

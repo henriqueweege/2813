@@ -3,7 +3,6 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors();
-
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(c =>
 {

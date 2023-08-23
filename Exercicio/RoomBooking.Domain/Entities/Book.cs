@@ -1,9 +1,14 @@
 ﻿using RoomBooking.Domain.Entities.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace RoomBooking.Domain.Entities;
 
 public class Book : Entity
 {
+    public string  Email { get; private set; }
+    public Guid RoomId { get; private set; }
+    public DateTime Date { get; private set; }
+    
     public Book(string email, Guid roomId, DateTime date)
     {
         Email = email;
@@ -11,15 +16,27 @@ public class Book : Entity
         Date = date;
     }
 
-    public string  Email { get; private set; }
-    public Guid RoomId { get; private set; }
-    public DateTime Date { get; private set; }
-
-
+    #region Change Methods
+    public bool ChangeEmail(string email)
+    {
+        var validator = new EmailAddressAttribute();
+        if (validator.IsValid(email))
+        {
+            Email = email;
+            return true;
+        }
+        return false;
+    }
+    public bool ChangeDate(DateTime date)
+    {
+        Date = date;
+        return true;
+    }
     public bool ChangeRoomId(Guid newRoomId)
     {
         RoomId = newRoomId;
         return true;
     }
+    #endregion
 }
 

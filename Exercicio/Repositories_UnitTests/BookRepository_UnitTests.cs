@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RoomBooking.Domain.DataAccess.Repositories;
 using RoomBooking.Domain.Entities;
-using RoomBooking.Repositories.Repositories;
 using RoomBookinhg.Infrastructure.Data;
 
 namespace Repositories_UnitTests;
@@ -61,7 +61,7 @@ public class BookRepository_UnitTests : IDisposable
         var entity = _repository.GetById(id);
         Assert.NotNull(updated);
         Assert.Equal(id, entity.Id);
-        Assert.DoesNotMatch(initialRoomId.ToString(), entity.RoomId.ToString());
+        Assert.NotEqual(initialRoomId.ToString(), entity.RoomId.ToString());
     }
 
     [Fact]
