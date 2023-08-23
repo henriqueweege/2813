@@ -23,5 +23,11 @@ jobs:
       run: dotnet restore ./Exercicio/DependencyRoomBooking.sln
     - name: Build
       run: dotnet build --no-restore  ./Exercicio/DependencyRoomBooking.sln
-    - name: Test
-      run: dotnet test --no-build --verbosity normal ./Exercicio/Repositories_UnitTests/Repositories_UnitTests.csproj
+    - name: Repositories Tests
+      run: dotnet test --no-build --verbosity normal ./Exercicio/Tests/Domain_Tests/Repositories_UnitTests.csproj
+    - name: Converters Tests
+      run: dotnet test --no-build --verbosity normal ./Exercicio/Tests/Domain_Tests/Converters_UnitTests.csproj
+    - name: Handler Tests
+      run: dotnet test --no-build --verbosity normal ./Exercicio/Tests/Domain_Tests/Handler_UnitTests.csproj
+    - name: Fake Repositories Tests
+      run: dotnet test --no-build --verbosity normal ./Exercicio/Tests/TestsTools_Tests/FakeRepositories_UnitTests.csproj
