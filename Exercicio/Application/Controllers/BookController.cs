@@ -1,89 +1,81 @@
-﻿//using Dapper;
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.Data.SqlClient;
-//using RestSharp;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using RoomBook.BusinessLogic.Commands;
+using RoomBook.BusinessLogic.Commands.BookCommands;
+using RoomBook.BusinessLogic.Queries.BookQueries;
+using RoomBooking.Entities.Entities;
 
-//namespace DependencyRoomBooking.Controllers;
+namespace DependencyRoomBooking.Controllers;
 
-//[ApiController]
-//[Route("[controller]/[action]")]
-//public class BookController : ControllerBase
-//{
-//    [HttpPost]
-//    public async Task<IActionResult> Book(BookRoomCommand command)
-//    {
-//        //Recupera o usuário
-//       await using var connection = new SqlConnection();
-//        var customer = await connection
-//            .QueryFirstOrDefaultAsync<Customer?>("SELECT * FROM [Customer] WHERE [Email]=@email",
-//                new { command.Email });
-
-//        if (customer == null)
-//            return NotFound();
-
-//        // Verifica se a sala está disponível
-//        var room = await connection.QueryFirstOrDefaultAsync<Book?>(
-//            "SELECT * FROM [Book] WHERE [Room]=@room AND [Date] BETWEEN @dateStart AND @dateEnd",
-//            new
-//            {
-//                Room = command.RoomId,
-//                DateStart = command.Day.Date,
-//                DateEnd = command.Day.Date.AddDays(1).AddTicks(-1),
-//            });
-
-//        // Se existe uma reserva, a sala está indisponível
-//        if (room is not null)
-//            return BadRequest();
-
-//        // Tenta fazer um pagamento
-//        var client = new RestClient("https://payments.com");
-//        var request = new RestRequest()
-//            .AddQueryParameter("api_key", "c20c8acb-bd76-4597-ac89-10fd955ac60d")
-//            .AddJsonBody(new
-//            {
-//                User = command.Email,
-//                CreditCard = command.CreditCard
-//            });
-//        var response = await client.PostAsync<PaymentResponse>(request, new CancellationToken());
-
-//        // Se a requisição não pode ser completa
-//        if (response is null)
-//            return BadRequest();
-
-//        // Se o status foi diferente de "pago"
-//        if (response?.Status != "paid")
-//            return BadRequest();
-
-//        // Cria a reserva
-//        var book = new Book(command.Email, command.RoomId, command.Day);
-
-//        // Salva os dados
-//        await connection.ExecuteAsync("INSERT INTO [Book] VALUES(@date, @email, @room)", new
-//        {
-//            book.Date,
-//            book.Email,
-//            book.Room
-//        });
-
-//        // Retorna o número da reserva
-//        return Ok();
-//    }
-//}
-
-//public class BookRoomCommand
-//{
-//    public string Email { get; set; }
-//    public Guid RoomId { get; set; }
-//    public DateTime Day { get; set; }
-//    public CreditCard CreditCard { get; set; }
-//}
-
-//public record PaymentResponse(int Code, string Status);
-
-//public record Customer(string Email);
-
-//public record Room(Guid Id, string Name);
-
-//public record Book(string Email, Guid Room, DateTime Date);
-
-//public record CreditCard(string Number, string Holder, string Expiration, string Cvv);
+[ApiController]
+[Route("[controller]/[action]")]
+#pragma warning disable 1591
+public class BookController : ControllerBase
+{
+    /// <summary>
+    /// Book a room.
+    /// </summary>
+    [Produces("application/json")]
+    [ProducesResponseType(typeof(CommandResult<Book>), StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(CommandResult<Book>), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(CommandResult<Book>), StatusCodes.Status200OK)]
+    [HttpPost]
+    public IActionResult PostBook([FromBody] CreateBookCommand command, [FromServices] IMediator mediator)
+        => Return(mediator.Send(command).Result);
+    /// <summary>
+    /// Get a book register by id.
+    /// </summary>
+    [Produces("application/json")]
+    [ProducesResponseType(typeof(CommandResult<Book>), StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(CommandResult<Book>), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(CommandResult<Book>), StatusCodes.Status200OK)]
+    [HttpGet]
+    public IActionResult GetById([FromQuery] Guid id, [FromServices] IMediator mediator)
+        => Return(mediator.Send(new GetByIdBookQuery() { Id = id}).Result);
+    /// <summary>
+    /// Get all book register.
+    /// </summary>
+    [Produces("application/json")]
+    [ProducesResponseType(typeof(CommandResult<Book>), StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(CommandResult<Book>), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(CommandResult<Book>), StatusCodes.Status200OK)]
+    [HttpGet]
+    public IActionResult GetAll([FromServices] IMediator mediator)
+        => Return(mediator.Send(new GetAllBookQuery()).Result);
+    /// <summary>
+    /// Update a book register.
+    /// </summary>
+    [Produces("application/json")]
+    [ProducesResponseType(typeof(CommandResult<Book>), StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(CommandResult<Book>), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(CommandResult<Book>), StatusCodes.Status200OK)]
+    [HttpPut]
+    public IActionResult Put([FromBody] UpdateBookCommand command, [FromServices] IMediator mediator)
+        => Return(mediator.Send(command).Result);
+    /// <summary>
+    /// Delete a book register.
+    /// </summary>
+    [Produces("application/json")]
+    [ProducesResponseType(typeof(CommandResult<Book>), StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(CommandResult<Book>), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(CommandResult<Book>), StatusCodes.Status200OK)]
+    [HttpDelete]
+    public IActionResult Delete([FromBody] DeleteBookCommand command, [FromServices] IMediator mediator)
+        => Return(mediator.Send(command).Result);
+    private IActionResult Return(dynamic result)
+    {
+        if (result.Message.Contains("Ok"))
+        {
+            return Ok(result);
+        }
+        else if (result.Message.Contains("BadRequest"))
+        {
+            return BadRequest(result);
+        }
+        else if (result.Message.Contains("NoContent"))
+        {
+            return StatusCode(StatusCodes.Status204NoContent, result);
+        }
+        return StatusCode(StatusCodes.Status500InternalServerError, result);
+    }
+}

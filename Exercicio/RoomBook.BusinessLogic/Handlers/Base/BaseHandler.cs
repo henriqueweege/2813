@@ -1,15 +1,10 @@
-﻿using Domain.Commands;
-using Domain.Commands.Contracts;
-using Domain.Queries.Contracts;
-using RoomBooking.Domain.Converters.Contracts;
-using RoomBooking.Domain.Entities.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RoomBook.BusinessLogic.Commands;
+using RoomBook.BusinessLogic.Commands.Contracts;
+using RoomBook.BusinessLogic.Converters.Contracts;
+using RoomBook.BusinessLogic.Queries.Contracts;
+using RoomBooking.Entities.Entities.Base;
 
-namespace RoomBooking.Domain.Handlers.Base;
+namespace RoomBook.BusinessLogic.Handlers.Base;
 
 public abstract class BaseHandler<E,
                          C,
@@ -27,4 +22,5 @@ public abstract class BaseHandler<E,
 {
 
     public abstract CommandResult<E> Handle(CC command);
+    public abstract CommandResult<E> Handle(UC command);
 }

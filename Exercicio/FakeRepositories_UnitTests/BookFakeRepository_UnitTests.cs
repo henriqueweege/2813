@@ -1,4 +1,4 @@
-﻿using RoomBooking.Domain.Entities;
+﻿using RoomBooking.Entities.Entities;
 using TestsTools.Fakes.Repositories;
 
 namespace FakeRepositories_UnitTests;

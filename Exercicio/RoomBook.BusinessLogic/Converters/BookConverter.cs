@@ -1,20 +1,20 @@
-﻿using RoomBook.BusinessLogic.Commands.Book;
-using RoomBooking.Domain.Commands.Book;
-using RoomBooking.Domain.Converters.Contracts;
-using RoomBooking.Domain.Entities;
+﻿using RoomBook.BusinessLogic.Commands.BookCommands;
+using RoomBook.BusinessLogic.Converters.Contracts;
+using RoomBooking.Entities.Entities;
 
-namespace RoomBooking.Domain.Converters;
+namespace RoomBook.BusinessLogic.Converters;
 
 public class BookConverter : IConverter<Book, CreateBookCommand, UpdateBookCommand>
 {
     public Book ConvertFromCreateCommandToEntity(CreateBookCommand command)
-     => throw new NotImplementedException();
+        => new Book(command.Email, command.RoomId, command.Day);
+    
 
     public Book ConvertFromUpdateCommandToEntity(UpdateBookCommand command, Book entityToUpdate)
     {
         entityToUpdate.ChangeEmail(command.Email);
         entityToUpdate.ChangeRoomId(command.RoomId);
-        entityToUpdate.ChangeDate(command.Date);
+        entityToUpdate.ChangeDate(command.Day);
         return entityToUpdate;
     }
 }

@@ -1,7 +1,7 @@
-﻿using RoomBooking.Domain.DataAccess.Repositories.Base.Contracts;
-using RoomBooking.Domain.Entities;
+﻿using RoomBooking.Entities.Entities;
+using RoomBooking.Infrastructure.DataAccess.Repositories.Base.Contracts;
 
-namespace RoomBooking.Domain.DataAccess.Repositories.Contracts;
+namespace RoomBooking.Infrastructure.DataAccess.Repositories.Contracts;
 
 public interface IRoomRepository : IBaseRepository<Room>
 {

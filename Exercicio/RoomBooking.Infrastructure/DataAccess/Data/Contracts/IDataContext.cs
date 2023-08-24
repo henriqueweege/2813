@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace RoomBookinhg.Infrastructure.Data.Contracts;
+namespace RoomBooking.Infrastructure.DataAccess.Data.Contracts;
 
 public interface IDataContext : IDisposable
 {
-    EntityEntry Entry(Object entity);
+    EntityEntry Entry(object entity);
     DbSet<T> Set<T>() where T : class;
-    Int32 SaveChanges();
+    int SaveChanges();
 }

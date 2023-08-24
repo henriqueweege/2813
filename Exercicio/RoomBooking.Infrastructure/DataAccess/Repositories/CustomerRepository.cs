@@ -1,17 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RoomBooking.Domain.DataAccess.Repositories.Base;
-using RoomBooking.Domain.DataAccess.Repositories.Contracts;
-using RoomBooking.Domain.Entities;
-using RoomBookinhg.Infrastructure.Data.Contracts;
-using System.Data;
+using RoomBooking.Entities.Entities;
+using RoomBooking.Infrastructure.DataAccess.Data.Contracts;
+using RoomBooking.Infrastructure.DataAccess.Repositories.Base;
+using RoomBooking.Infrastructure.DataAccess.Repositories.Contracts;
 
-namespace RoomBooking.Domain.DataAccess.Repositories;
+namespace RoomBooking.Infrastructure.DataAccess.Repositories;
 
 public class CustomerRepository : BaseRepository<Customer>, ICustomerRepository
 {
     private readonly IDataContext _context;
     private readonly DbSet<Customer> _entity;
-    public CustomerRepository(IDataContext context) : base(context) 
+    public CustomerRepository(IDataContext context) : base(context)
     {
         _context = context;
         _entity = _context.Set<Customer>();

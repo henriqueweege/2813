@@ -1,12 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RoomBooking.Domain.DataAccess.Repositories.Base;
-using RoomBooking.Domain.DataAccess.Repositories.Contracts;
-using RoomBooking.Domain.Entities;
-using RoomBookinhg.Infrastructure.Data;
-using RoomBookinhg.Infrastructure.Data.Contracts;
-using System.Linq;
+using RoomBooking.Entities.Entities;
+using RoomBooking.Infrastructure.DataAccess.Data.Contracts;
+using RoomBooking.Infrastructure.DataAccess.Repositories.Base;
+using RoomBooking.Infrastructure.DataAccess.Repositories.Contracts;
 
-namespace RoomBooking.Domain.DataAccess.Repositories;
+namespace RoomBooking.Infrastructure.DataAccess.Repositories;
 
 public class BookRepository : BaseRepository<Book>, IBookRepository
 {
@@ -20,5 +18,5 @@ public class BookRepository : BaseRepository<Book>, IBookRepository
     }
 
     public IQueryable<Book>? GetByRoomIdAndDate(Guid id, DateTime date)
-        => _entity.Where(x=>x.RoomId == id && x.Date.Date == date.Date).Select(x=>x);
+        => _entity.Where(x => x.RoomId == id && x.Date.Date == date.Date).Select(x => x);
 }

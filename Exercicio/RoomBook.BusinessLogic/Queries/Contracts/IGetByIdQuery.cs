@@ -1,4 +1,4 @@
-﻿namespace Domain.Queries.Contracts;
+﻿namespace RoomBook.BusinessLogic.Queries.Contracts;
 
 public interface IGetByIdQuery
 {

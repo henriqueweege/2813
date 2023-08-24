@@ -1,6 +1,6 @@
-﻿using RoomBooking.Domain.Entities.Base;
+﻿using RoomBooking.Entities.Entities.Base;
 
-namespace RoomBooking.Domain.DataAccess.Repositories.Base.Contracts;
+namespace RoomBooking.Infrastructure.DataAccess.Repositories.Base.Contracts;
 
 public interface IBaseRepository<E> where E : Entity
 {

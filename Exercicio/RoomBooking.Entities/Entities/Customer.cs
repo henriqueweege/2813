@@ -1,16 +1,15 @@
-﻿using RoomBooking.Domain.Entities.Base;
+﻿using RoomBooking.Entities.Entities.Base;
 using System.ComponentModel.DataAnnotations;
 
-namespace RoomBooking.Domain.Entities;
+namespace RoomBooking.Entities.Entities;
 
 public class Customer : Entity
 {
     public string Email { get; private set; }
     public Customer(string email)
     {
-        Email = email;
+       ChangeEmail(email);
     }
-
 
     #region Change Methods
     public bool ChangeEmail(string email)
@@ -21,7 +20,7 @@ public class Customer : Entity
             Email = email;
             return true;
         }
-        return false;
+        throw new ArgumentException("Email em formato inválido.");
     }
     #endregion
 }

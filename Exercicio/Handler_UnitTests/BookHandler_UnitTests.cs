@@ -1,10 +1,9 @@
-﻿using RoomBook.BusinessLogic.Commands.Book;
-using RoomBooking.Domain.Commands.Book;
-using RoomBooking.Domain.Converters;
-using RoomBooking.Domain.Entities;
-using RoomBooking.Domain.Handlers;
-using RoomBooking.Domain.Queries.Book;
-using RoomBooking.Domain.ValueObjects;
+﻿using RoomBook.BusinessLogic.Commands.BookCommands;
+using RoomBook.BusinessLogic.Converters;
+using RoomBook.BusinessLogic.Handlers;
+using RoomBook.BusinessLogic.Queries.BookQueries;
+using RoomBooking.Entities.Entities;
+using RoomBooking.Entities.ValueObjects;
 using RoomBooking.InfrastructureServices.PaymentServices.Contract;
 using TestsTools.Fakes.InfrastructureServices;
 using TestsTools.Fakes.Repositories;
@@ -15,6 +14,7 @@ public class BookHandler_UnitTests
 {
     private readonly BookFakeRepository _bookFakeRepository;
     private readonly CustomerFakeRepository _customerFakeRepository;
+    private readonly RoomFakeRepository _roomFakeRepository;
     private readonly BookConverter _converter;
     private readonly BookHandler _handler;
     private readonly IPaymentServices _paymentServices;
@@ -27,8 +27,9 @@ public class BookHandler_UnitTests
         _bookFakeRepository = new();
         _customerFakeRepository = new();
         _converter = new();
+        _roomFakeRepository = new();
         _paymentServices = new FakePaymentServices();
-        _handler = new BookHandler(_converter, _bookFakeRepository, _customerFakeRepository, _paymentServices);
+        _handler = new BookHandler(_converter, _bookFakeRepository, _customerFakeRepository, _roomFakeRepository, _paymentServices);
         _email = "email@mail.com";
         _roomId = Guid.NewGuid();
         _date = DateTime.Now;
@@ -40,10 +41,11 @@ public class BookHandler_UnitTests
 
         //arrange
         _customerFakeRepository.Save(new Customer(_email));
+        var room = _roomFakeRepository.Save(new Room("name"));
         var command = new CreateBookCommand()
         {
             Email = _email,
-            RoomId = _roomId,
+            RoomId = room.Id,
             Day = _date,
             CreditCard = new CreditCard()
             {
@@ -95,20 +97,24 @@ public class BookHandler_UnitTests
     {
         //arrange
         var email = "mail@email.com";
-        var roomId = Guid.NewGuid();
+        _customerFakeRepository.Save(new Customer(email));
+        var room = _roomFakeRepository.Save(new Room("name"));
         var date = DateTime.Now;
         var newEmail = "newmail@email.com";
-        var newRoomId = Guid.NewGuid();
+        _customerFakeRepository.Save(new Customer(newEmail));
+
+        var newRoom = _roomFakeRepository.Save(new Room("name"));
+
         var newDate = DateTime.Now.AddDays(1.0);
 
 
-        var entityToUpdate = _bookFakeRepository.Save(new Book(email, roomId, date));
+        var entityToUpdate = _bookFakeRepository.Save(new Book(email, room.Id, date));
         var command = new UpdateBookCommand()
         {
             Id = entityToUpdate.Id,
             Email = newEmail,
-            RoomId = newRoomId,
-            Date = newDate,
+            RoomId = newRoom.Id,
+            Day = newDate,
         };
 
         //act

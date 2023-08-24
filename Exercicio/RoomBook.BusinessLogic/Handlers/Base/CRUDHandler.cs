@@ -1,14 +1,12 @@
-﻿using Domain.Commands;
-using Domain.Commands.Contracts;
-using Domain.Enums;
-using Domain.Queries.Contracts;
-using RoomBooking.Domain.Converters.Contracts;
-using RoomBooking.Domain.DataAccess.Repositories.Base.Contracts;
-using RoomBooking.Domain.Entities.Base;
-using RoomBooking.Domain.Enums;
-using RoomBooking.Domain.Enums.Extensions;
-using RoomBooking.Domain.Handlers.Base;
-using RoomBooking.Domain.Queries;
+﻿using RoomBook.BusinessLogic.Commands;
+using RoomBook.BusinessLogic.Commands.Contracts;
+using RoomBook.BusinessLogic.Converters.Contracts;
+using RoomBook.BusinessLogic.Enums;
+using RoomBook.BusinessLogic.Enums.Extensions;
+using RoomBook.BusinessLogic.Queries;
+using RoomBook.BusinessLogic.Queries.Contracts;
+using RoomBooking.Entities.Entities.Base;
+using RoomBooking.Infrastructure.DataAccess.Repositories.Base.Contracts;
 
 namespace RoomBook.BusinessLogic.Handlers.Base;
 
@@ -43,6 +41,10 @@ public class CRUDHandler<E, C, CC, UC, DC, GAQ, GBIQ>
             }
             return new CommandResult<E>(true, ESuccessMessages.OK_REQUISITON_COMPLETED_SUCCESSFULLY.GetDescription(), entity);
         }
+        catch(ArgumentException ex)
+        {
+            return new CommandResult<E>(false, $"BadRequest: {ex.Message}");
+        }
         catch (Exception ex)
         {
             return new CommandResult<E>(false, ex.InnerException.Message);
@@ -50,7 +52,7 @@ public class CRUDHandler<E, C, CC, UC, DC, GAQ, GBIQ>
 
     }
 
-    public CommandResult<E> Handle(UC command)
+    public override CommandResult<E> Handle(UC command)
     {
         try
         {
@@ -69,6 +71,10 @@ public class CRUDHandler<E, C, CC, UC, DC, GAQ, GBIQ>
                 return new CommandResult<E>(true, ESuccessMessages.OK_REQUISITON_COMPLETED_SUCCESSFULLY.GetDescription(), entityToUpdate);
             }
             return new CommandResult<E>(false, EErrorMessages.INTERNAL_SERVER_ERROR.GetDescription(), entityToUpdate);
+        }
+        catch (ArgumentException ex)
+        {
+            return new CommandResult<E>(false, $"BadRequest: {ex.Message}");
         }
         catch (Exception ex)
         {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Domain.Enums;
+namespace RoomBook.BusinessLogic.Enums;
 
 public enum ESuccessMessages
 {

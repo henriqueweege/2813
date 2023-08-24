@@ -1,6 +1,6 @@
-﻿using RoomBooking.Domain.ValueObjects.Contracts;
+﻿using RoomBooking.Entities.ValueObjects.Contracts;
 
-namespace RoomBooking.Domain.ValueObjects;
+namespace RoomBooking.Entities.ValueObjects;
 
 public record CreditCard : IValueObject
 {
@@ -8,4 +8,4 @@ public record CreditCard : IValueObject
     public string Holder { get; set; }
     public string Expiration { get; set; }
     public string Cvv { get; set; }
-} 
+}

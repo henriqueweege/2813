@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using RoomBooking.Domain.Entities.Base;
+using RoomBooking.Entities.Entities.Base;
 
-namespace Domain.Commands;
+namespace RoomBook.BusinessLogic.Commands;
 
 public class CommandResult<E> : IRequest where E : Entity
 {

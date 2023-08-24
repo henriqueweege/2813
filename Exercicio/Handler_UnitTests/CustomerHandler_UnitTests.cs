@@ -1,9 +1,8 @@
-using RoomBooking.Domain.Commands.Customer;
-using RoomBooking.Domain.Entities;
-using RoomBooking.Domain.Handlers;
-using RoomBooking.Domain.Handlers.Base;
-using RoomBooking.Domain.Queries.Customer;
-using RoomBooking.DomainServices.Converters;
+using RoomBook.BusinessLogic.Commands.CustomerCommands;
+using RoomBook.BusinessLogic.Converters;
+using RoomBook.BusinessLogic.Handlers;
+using RoomBook.BusinessLogic.Queries.CustomerQueries;
+using RoomBooking.Entities.Entities;
 using TestsTools.Fakes.Repositories;
 
 namespace Handler_UnitTests;
@@ -17,8 +16,8 @@ public class CustomerHandler_UnitTests
 
     public CustomerHandler_UnitTests()
     {
-        FakeRepository= new ();
-        Converter= new ();
+        FakeRepository = new();
+        Converter = new();
         Handler = new(Converter, FakeRepository);
         Email = "mail@email.com";
     }
@@ -70,7 +69,7 @@ public class CustomerHandler_UnitTests
         //arrange
         var saved = FakeRepository.Save(new Customer(Email));
         var command = new DeleteCustomerCommand()
-        { 
+        {
             Id = saved.Id,
         };
 

@@ -1,14 +1,14 @@
-﻿using RoomBooking.Domain.Entities.Base;
+﻿using RoomBooking.Entities.Entities.Base;
 using System.ComponentModel.DataAnnotations;
 
-namespace RoomBooking.Domain.Entities;
+namespace RoomBooking.Entities.Entities;
 
 public class Book : Entity
 {
-    public string  Email { get; private set; }
+    public string Email { get; private set; }
     public Guid RoomId { get; private set; }
     public DateTime Date { get; private set; }
-    
+
     public Book(string email, Guid roomId, DateTime date)
     {
         Email = email;

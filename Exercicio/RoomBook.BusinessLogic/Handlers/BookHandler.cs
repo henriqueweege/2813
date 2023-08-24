@@ -1,35 +1,47 @@
-﻿using Domain.Commands;
-using Domain.Enums;
-using RoomBook.BusinessLogic.Commands.Book;
+﻿using MediatR;
+using RoomBook.BusinessLogic.Commands;
+using RoomBook.BusinessLogic.Commands.BookCommands;
+using RoomBook.BusinessLogic.Converters;
+using RoomBook.BusinessLogic.Converters.Contracts;
+using RoomBook.BusinessLogic.Enums;
+using RoomBook.BusinessLogic.Enums.Extensions;
 using RoomBook.BusinessLogic.Handlers.Base;
-using RoomBooking.Domain.Commands.Book;
-using RoomBooking.Domain.Converters;
-using RoomBooking.Domain.Converters.Contracts;
-using RoomBooking.Domain.DataAccess.Repositories.Contracts;
-using RoomBooking.Domain.Entities;
-using RoomBooking.Domain.Enums;
-using RoomBooking.Domain.Enums.Extensions;
-using RoomBooking.Domain.Queries.Book;
+using RoomBook.BusinessLogic.Queries;
+using RoomBook.BusinessLogic.Queries.BookQueries;
+using RoomBooking.Entities.Entities;
+using RoomBooking.Infrastructure.DataAccess.Repositories.Contracts;
 using RoomBooking.InfrastructureServices.PaymentServices.Contract;
 using System;
+using System.Reflection.Metadata.Ecma335;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
-namespace RoomBooking.Domain.Handlers;
+namespace RoomBook.BusinessLogic.Handlers;
 
 public class BookHandler : CRUDHandler<Book, BookConverter,
                                            CreateBookCommand, UpdateBookCommand, DeleteBookCommand,
-                                           GetAllBookQuery, GetByIdBookQuery>
+                                           GetAllBookQuery, GetByIdBookQuery>,
+                           IRequestHandler<UpdateBookCommand, CommandResult<Book>>,
+                           IRequestHandler<CreateBookCommand, CommandResult<Book>>,
+                           IRequestHandler<DeleteBookCommand, CommandResult<Book>>,
+                           IRequestHandler<GetAllBookQuery, QueryResult<Book>>,
+                           IRequestHandler<GetByIdBookQuery, QueryResult<Book>>
+
 {
     private readonly IBookRepository _bookRepository;
+    private readonly IRoomRepository _roomRepository;
     private readonly ICustomerRepository _customerRepository;
     private readonly IPaymentServices _paymentServices;
 
 
-    public BookHandler(IConverter<Book, CreateBookCommand, UpdateBookCommand> converter, 
+    public BookHandler(IConverter<Book, CreateBookCommand, UpdateBookCommand> converter,
                        IBookRepository bookRepository,
-                       ICustomerRepository customerRepository, IPaymentServices paymentServices) : base(converter, bookRepository)
+                       ICustomerRepository customerRepository, 
+                       IRoomRepository roomRepository,  
+                       IPaymentServices paymentServices) : base(converter, bookRepository)
     {
         _bookRepository = bookRepository;
         _customerRepository = customerRepository;
+        _roomRepository = roomRepository;
         _paymentServices = paymentServices;
     }
 
@@ -37,31 +49,25 @@ public class BookHandler : CRUDHandler<Book, BookConverter,
     {
         try
         {
-            //Recupera o usuário
-            var customer = _customerRepository.GetByEmail(command.Email);
+            var customerValidated = ValidateCustomer(command.Email);
 
-            if (customer is null)
-                return new CommandResult<Book>(false, EErrorMessages.BAD_REQUEST_INVALID_EMAIL.GetDescription());
+            if (customerValidated is not null)
+                return customerValidated;
 
-            // Verifica se a sala está disponível
-            var room = _bookRepository.GetByRoomIdAndDate(command.RoomId, command.Day);
+            var bookAndRoomValidated = ValidateBookAndRoom(command.RoomId, command.Day);
+            
+            if(bookAndRoomValidated is not null)
+                return bookAndRoomValidated;
 
-            // Se existe uma reserva, a sala está indisponível
-            if (room.Any())
-                return new CommandResult<Book>(false, EErrorMessages.BAD_REQUEST_OCCUPIED_ROOM.GetDescription());
-
-            // Tenta fazer um pagamento
-            var successPayment = _paymentServices.SendPaymentRequest(command.Email, command.CreditCard);
+             // Tenta fazer um pagamento
+             var successPayment = _paymentServices.SendPaymentRequest(command.Email, command.CreditCard);
 
             // Se o pagamento não for realizado com sucesso
             if (!successPayment)
                 return new CommandResult<Book>(false, EErrorMessages.BAD_REQUEST_OCCUPIED_ROOM.GetDescription());
 
             // Cria a reserva
-            var book = new Book(command.Email, command.RoomId, command.Day);
-            book = _bookRepository.Save(book);
-
-            return new CommandResult<Book>(true, ESuccessMessages.OK_REQUISITON_COMPLETED_SUCCESSFULLY.GetDescription(), book);
+            return base.Handle(command);
         }
         catch (Exception ex)
         {
@@ -70,4 +76,75 @@ public class BookHandler : CRUDHandler<Book, BookConverter,
 
     }
 
+    private CommandResult<Book>? ValidateCustomer(string email)
+    {
+        // Verifica se cliente existe
+        var customer = _customerRepository.GetByEmail(email);
+
+        if (customer is null)
+            return new CommandResult<Book>(false, EErrorMessages.BAD_REQUEST_INVALID_EMAIL.GetDescription());
+
+        return null;
+    }
+
+    private CommandResult<Book>? ValidateBookAndRoom(Guid roomId, DateTime date)
+    {
+        // Verifica se a sala está disponível
+        var books = _bookRepository.GetByRoomIdAndDate(roomId, date);
+
+        // Se existe uma reserva, a sala está indisponível
+        if (books.Any())
+            return new CommandResult<Book>(false, EErrorMessages.BAD_REQUEST_OCCUPIED_ROOM.GetDescription());
+
+        // Verifica se a sala existe
+        var room = _roomRepository.GetById(roomId);
+
+        // Se quarto não existe, retorna erro
+        if (room is null)
+            return new CommandResult<Book>(false, EErrorMessages.BAD_REQUEST_ROOM_DOESNOTEXIST.GetDescription());
+
+        return null;
+    }
+
+
+
+    public override CommandResult<Book> Handle(UpdateBookCommand command)
+    {
+        try
+        {
+            var customerValidated = ValidateCustomer(command.Email);
+            if (customerValidated is not null)
+                return customerValidated;
+
+            var bookAndRoomAreValid = ValidateBookAndRoom(command.RoomId, command.Day);
+            if (bookAndRoomAreValid is not null)
+                return bookAndRoomAreValid;
+
+            return base.Handle(command);
+        }
+        catch (ArgumentException ex)
+        {
+            return new CommandResult<Book>(false, $"BadRequest: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            return new CommandResult<Book>(false, ex.InnerException.Message);
+        }
+
+    }
+
+    public Task<CommandResult<Book>> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
+        => Task.FromResult(Handle(request));
+
+    public Task<CommandResult<Book>> Handle(CreateBookCommand request, CancellationToken cancellationToken)
+        => Task.FromResult(Handle(request));
+
+    public Task<CommandResult<Book>> Handle(DeleteBookCommand request, CancellationToken cancellationToken)
+        => Task.FromResult(Handle(request));
+
+    public Task<QueryResult<Book>> Handle(GetByIdBookQuery request, CancellationToken cancellationToken)
+        => Task.FromResult(Handle(request));
+
+    public Task<QueryResult<Book>> Handle(GetAllBookQuery request, CancellationToken cancellationToken)
+        => Task.FromResult(Handle(request));
 }

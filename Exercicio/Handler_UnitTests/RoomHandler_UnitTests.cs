@@ -1,8 +1,8 @@
-﻿using RoomBooking.Domain.Commands.Customer;
-using RoomBooking.Domain.Converters;
-using RoomBooking.Domain.Entities;
-using RoomBooking.Domain.Handlers;
-using RoomBooking.Domain.Queries.Room;
+﻿using RoomBook.BusinessLogic.Commands.RoomCommands;
+using RoomBook.BusinessLogic.Converters;
+using RoomBook.BusinessLogic.Handlers;
+using RoomBook.BusinessLogic.Queries.RoomQueries;
+using RoomBooking.Entities.Entities;
 using TestsTools.Fakes.Repositories;
 
 namespace Handler_UnitTests;

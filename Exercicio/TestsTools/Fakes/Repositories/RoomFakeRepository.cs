@@ -1,10 +1,5 @@
-﻿using RoomBooking.Domain.DataAccess.Repositories.Contracts;
-using RoomBooking.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RoomBooking.Entities.Entities;
+using RoomBooking.Infrastructure.DataAccess.Repositories.Contracts;
 using TestsTools.Fakes.Repositories.Base;
 
 namespace TestsTools.Fakes.Repositories;

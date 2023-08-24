@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace RoomBooking.Domain.Entities.Base;
+namespace RoomBooking.Entities.Entities.Base;
 
 public abstract class Entity
 {

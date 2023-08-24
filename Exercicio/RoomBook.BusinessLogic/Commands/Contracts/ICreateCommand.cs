@@ -1,4 +1,4 @@
-﻿namespace Domain.Commands.Contracts;
+﻿namespace RoomBook.BusinessLogic.Commands.Contracts;
 
 public interface ICreateCommand
 {

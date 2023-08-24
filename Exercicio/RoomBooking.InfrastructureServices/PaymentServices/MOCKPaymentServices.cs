@@ -1,4 +1,4 @@
-﻿using RoomBooking.Domain.ValueObjects;
+﻿using RoomBooking.Entities.ValueObjects;
 using RoomBooking.InfrastructureServices.PaymentServices.Contract;
 
 namespace RoomBooking.InfrastructureServices.PaymentServices;

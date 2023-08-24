@@ -1,7 +1,7 @@
-﻿using RoomBooking.Domain.Commands.Customer;
-using RoomBooking.Domain.Converters;
-using RoomBooking.Domain.Converters.Contracts;
-using RoomBooking.Domain.Entities;
+﻿using RoomBook.BusinessLogic.Commands.RoomCommands;
+using RoomBook.BusinessLogic.Converters;
+using RoomBook.BusinessLogic.Converters.Contracts;
+using RoomBooking.Entities.Entities;
 
 namespace Converters_UnitTests;
 

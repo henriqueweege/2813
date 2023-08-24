@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RoomBooking.Domain.DataAccess.Repositories.Base.Contracts;
-using RoomBooking.Domain.Entities.Base;
-using RoomBookinhg.Infrastructure.Data;
-using RoomBookinhg.Infrastructure.Data.Contracts;
+using RoomBooking.Entities.Entities.Base;
+using RoomBooking.Infrastructure.DataAccess.Data;
+using RoomBooking.Infrastructure.DataAccess.Data.Contracts;
+using RoomBooking.Infrastructure.DataAccess.Repositories.Base.Contracts;
 
-namespace RoomBooking.Domain.DataAccess.Repositories.Base;
+namespace RoomBooking.Infrastructure.DataAccess.Repositories.Base;
 
 public class BaseRepository<E> : IDisposable, IBaseRepository<E> where E : Entity
 {

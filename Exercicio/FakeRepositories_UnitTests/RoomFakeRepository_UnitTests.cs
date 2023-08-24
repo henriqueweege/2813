@@ -1,10 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RoomBooking.Domain.DataAccess.Repositories;
-using RoomBooking.Domain.Entities;
-using RoomBookinhg.Infrastructure.Data;
+﻿using RoomBooking.Entities.Entities;
 using TestsTools.Fakes.Repositories;
 
-namespace Repositories_UnitTests;
+namespace FakeRepositories_UnitTests;
 
 public class RoomFakeRepository_UnitTests
 {

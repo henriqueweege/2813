@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace RoomBooking.Domain.Enums;
+namespace RoomBook.BusinessLogic.Enums;
 
 public enum EErrorMessages
 {
@@ -17,5 +17,8 @@ public enum EErrorMessages
     BAD_REQUEST_OCCUPIED_ROOM = 4,
 
     [Description("BadRequest: pagamento não realizado.")]
-    BAD_REQUEST_UNSUCCESSFULL_PAYMENT = 4
+    BAD_REQUEST_UNSUCCESSFULL_PAYMENT = 5,
+
+    [Description("BadRequest: quarto não existe.")]
+    BAD_REQUEST_ROOM_DOESNOTEXIST = 6
 }

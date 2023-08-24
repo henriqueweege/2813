@@ -1,9 +1,9 @@
-﻿using RoomBook.BusinessLogic.Commands.Book;
-using RoomBooking.Domain.Commands.Book;
-using RoomBooking.Domain.Converters;
-using RoomBooking.Domain.Converters.Contracts;
-using RoomBooking.Domain.Entities;
-using RoomBooking.Domain.ValueObjects;
+﻿using RoomBook.BusinessLogic.Commands.BookCommands;
+using RoomBook.BusinessLogic.Commands.CustomerCommands;
+using RoomBook.BusinessLogic.Converters;
+using RoomBook.BusinessLogic.Converters.Contracts;
+using RoomBooking.Entities.Entities;
+using RoomBooking.Entities.ValueObjects;
 
 namespace Converters_UnitTests;
 
@@ -15,13 +15,14 @@ public class BookConverter_UnitTests
         Converter = new BookConverter();
     }
 
+
     [Fact]
     public void GivenCreateCommand_ShouldCreateEntity()
     {
         //arrange
-        var command = new CreateBookCommand() 
+        var command = new CreateBookCommand()
         {
-            Email  = "email@mail",
+            Email = "email@mail",
             RoomId = Guid.NewGuid(),
             Day = DateTime.Now,
             CreditCard = new CreditCard()
@@ -33,8 +34,11 @@ public class BookConverter_UnitTests
             }
         };
 
-        //act-assert
-        Assert.Throws<NotImplementedException>(() => Converter.ConvertFromCreateCommandToEntity(command));
+        //act
+        var entity = Converter.ConvertFromCreateCommandToEntity(command);
+        //assert
+        Assert.True(Guid.TryParse(entity.Id.ToString(), out _));
+        Assert.NotNull(entity.Email);
     }
 
     [Fact]
@@ -55,7 +59,7 @@ public class BookConverter_UnitTests
             Id = entityToUpdate.Id,
             Email = newEmail,
             RoomId = newRoomId,
-            Date = newDate,
+            Day = newDate,
         };
 
         //act

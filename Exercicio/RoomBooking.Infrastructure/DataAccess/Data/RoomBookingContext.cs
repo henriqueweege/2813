@@ -1,19 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RoomBookinhg.Infrastructure.Data.Contracts;
-using RoomBooking.Domain.Entities;
-using Microsoft.Extensions.Options;
+using RoomBooking.Entities.Entities;
+using RoomBooking.Infrastructure.DataAccess.Data.Contracts;
 
-namespace RoomBookinhg.Infrastructure.Data;
+namespace RoomBooking.Infrastructure.DataAccess.Data;
 
 
 public class RoomBookingContext : DbContext, IDataContext
 {
-    public RoomBookingContext(DbContextOptionsBuilder dbContextOptionsBuilder) : base(dbContextOptionsBuilder.Options) {}
+    public RoomBookingContext(DbContextOptionsBuilder dbContextOptionsBuilder) : base(dbContextOptionsBuilder.Options) { }
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder dbContextOptionsBuilder)
     {
-        
         dbContextOptionsBuilder.UseInMemoryDatabase(databaseName: "inMemoryDb");
     }
     public DbSet<Book> Books { get; set; }

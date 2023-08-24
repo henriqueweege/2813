@@ -1,5 +1,5 @@
-﻿using RoomBooking.Domain.DataAccess.Repositories.Base.Contracts;
-using RoomBooking.Domain.Entities.Base;
+﻿using RoomBooking.Entities.Entities.Base;
+using RoomBooking.Infrastructure.DataAccess.Repositories.Base.Contracts;
 
 namespace TestsTools.Fakes.Repositories.Base;
 

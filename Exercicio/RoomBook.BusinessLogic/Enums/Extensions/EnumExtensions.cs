@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace RoomBooking.Domain.Enums.Extensions;
+namespace RoomBook.BusinessLogic.Enums.Extensions;
 
 public static class EnumExtensions
 {
@@ -8,6 +8,6 @@ public static class EnumExtensions
     {
         DescriptionAttribute[] description = (DescriptionAttribute[])@enum.GetType().GetField(@enum.ToString()).GetCustomAttributes(typeof(DescriptionAttribute), false);
 
-        return description.Length > 0 ? description[0].Description : String.Empty;
+        return description.Length > 0 ? description[0].Description : string.Empty;
     }
 }
