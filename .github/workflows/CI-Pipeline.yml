@@ -31,3 +31,5 @@ jobs:
       run: dotnet test --no-build --verbosity normal ./Exercicio/Handler_UnitTests/Handler_UnitTests.csproj
     - name: Fake Repositories Tests
       run: dotnet test --no-build --verbosity normal ./Exercicio/FakeRepositories_UnitTests/FakeRepositories_UnitTests.csproj
+    - name: Fake Infrastructure Services Tests
+      run: dotnet test --no-build --verbosity normal ./Exercicio/FakeInfrastructureServices_UnitTests/FakeInfrastructureServices_UnitTests.csproj
