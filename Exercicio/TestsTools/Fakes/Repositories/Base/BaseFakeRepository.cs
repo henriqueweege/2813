@@ -5,7 +5,7 @@ namespace TestsTools.Fakes.Repositories.Base;
 
 public class BaseFakeRepository<E> : IBaseRepository<E> where E : Entity
 {
-    private IList<E> Entities { get; set; }
+    internal IList<E> Entities { get; set; }
     public BaseFakeRepository()
     {
         Entities = new List<E>();

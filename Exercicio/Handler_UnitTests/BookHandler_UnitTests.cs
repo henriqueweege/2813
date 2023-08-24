@@ -1,37 +1,45 @@
-﻿using RoomBooking.Domain.Commands.Book;
+﻿using RoomBook.BusinessLogic.Commands.Book;
+using RoomBooking.Domain.Commands.Book;
 using RoomBooking.Domain.Converters;
 using RoomBooking.Domain.Entities;
 using RoomBooking.Domain.Handlers;
 using RoomBooking.Domain.Queries.Book;
 using RoomBooking.Domain.ValueObjects;
+using RoomBooking.InfrastructureServices.PaymentServices.Contract;
+using TestsTools.Fakes.InfrastructureServices;
 using TestsTools.Fakes.Repositories;
 
 namespace Handler_UnitTests;
 
 public class BookHandler_UnitTests
 {
-    private readonly BookFakeRepository _fakeRepository;
+    private readonly BookFakeRepository _bookFakeRepository;
+    private readonly CustomerFakeRepository _customerFakeRepository;
     private readonly BookConverter _converter;
     private readonly BookHandler _handler;
+    private readonly IPaymentServices _paymentServices;
     private readonly string _email;
     private readonly Guid _roomId;
     private readonly DateTime _date;
 
     public BookHandler_UnitTests()
     {
-        _fakeRepository = new();
+        _bookFakeRepository = new();
+        _customerFakeRepository = new();
         _converter = new();
-        _handler = new(_converter, _fakeRepository);
+        _paymentServices = new FakePaymentServices();
+        _handler = new BookHandler(_converter, _bookFakeRepository, _customerFakeRepository, _paymentServices);
         _email = "email@mail.com";
         _roomId = Guid.NewGuid();
         _date = DateTime.Now;
     }
 
     [Fact]
-    public void GivenCorrectCreateCommand_ShouldHandleSuccessfully()
+    public void GivenCorrectCreateCommandAndContext_ShouldHandleSuccessfully()
     {
 
         //arrange
+        _customerFakeRepository.Save(new Customer(_email));
         var command = new CreateBookCommand()
         {
             Email = _email,
@@ -55,6 +63,34 @@ public class BookHandler_UnitTests
     }
 
     [Fact]
+    public void GivenInvalidEmail_ShouldHandleSuccessfully()
+    {
+
+        //arrange
+        _customerFakeRepository.Save(new Customer(_email));
+        var command = new CreateBookCommand()
+        {
+            Email = "invalid@email.com",
+            RoomId = _roomId,
+            Day = _date,
+            CreditCard = new CreditCard()
+            {
+                Number = "number",
+                Holder = "holder",
+                Expiration = "expiration",
+                Cvv = "cvv"
+            }
+        };
+
+        //act
+        var created = _handler.Handle(command);
+
+        //assert
+        Assert.True(!created.Success);
+        Assert.Null(created.Result);
+    }
+
+    [Fact]
     public void GivenCorrectUpdateCommand_ShouldHandleSuccessfully()
     {
         //arrange
@@ -66,7 +102,7 @@ public class BookHandler_UnitTests
         var newDate = DateTime.Now.AddDays(1.0);
 
 
-        var entityToUpdate = _fakeRepository.Save(new Book(email, roomId, date));
+        var entityToUpdate = _bookFakeRepository.Save(new Book(email, roomId, date));
         var command = new UpdateBookCommand()
         {
             Id = entityToUpdate.Id,
@@ -88,7 +124,7 @@ public class BookHandler_UnitTests
     {
 
         //arrange
-        var saved = _fakeRepository.Save(new Book(_email, _roomId, _date));
+        var saved = _bookFakeRepository.Save(new Book(_email, _roomId, _date));
         var command = new DeleteBookCommand()
         {
             Id = saved.Id,
@@ -107,7 +143,7 @@ public class BookHandler_UnitTests
     {
 
         //arrange
-        var saved = _fakeRepository.Save(new Book(_email, _roomId, _date));
+        var saved = _bookFakeRepository.Save(new Book(_email, _roomId, _date));
         var query = new GetAllBookQuery();
 
         //act
@@ -123,7 +159,7 @@ public class BookHandler_UnitTests
     {
 
         //arrange
-        var saved = _fakeRepository.Save(new Book(_email, _roomId, _date));
+        var saved = _bookFakeRepository.Save(new Book(_email, _roomId, _date));
         var query = new GetByIdBookQuery()
         {
             Id = saved.Id

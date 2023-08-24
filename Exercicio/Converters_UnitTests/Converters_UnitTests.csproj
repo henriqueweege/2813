@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RoomBooking.Domain\RoomBooking.Domain.csproj" />
+    <ProjectReference Include="..\RoomBook.BusinessLogic\RoomBook.BusinessLogic.csproj" />
   </ItemGroup>
 
 </Project>

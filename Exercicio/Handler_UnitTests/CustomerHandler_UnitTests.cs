@@ -1,10 +1,9 @@
-using Microsoft.AspNetCore.Http.HttpResults;
 using RoomBooking.Domain.Commands.Customer;
-using RoomBooking.Domain.Converters;
 using RoomBooking.Domain.Entities;
 using RoomBooking.Domain.Handlers;
 using RoomBooking.Domain.Handlers.Base;
 using RoomBooking.Domain.Queries.Customer;
+using RoomBooking.DomainServices.Converters;
 using TestsTools.Fakes.Repositories;
 
 namespace Handler_UnitTests;

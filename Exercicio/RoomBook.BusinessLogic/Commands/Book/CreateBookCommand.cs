@@ -1,7 +1,7 @@
 ﻿using Domain.Commands.Contracts;
 using RoomBooking.Domain.ValueObjects;
 
-namespace RoomBooking.Domain.Commands.Book;
+namespace RoomBook.BusinessLogic.Commands.Book;
 
 public class CreateBookCommand : ICreateCommand
 {

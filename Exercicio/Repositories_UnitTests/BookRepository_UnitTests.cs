@@ -31,6 +31,21 @@ public class BookRepository_UnitTests : IDisposable
 
     }
 
+
+    [Fact]
+    public void GivenValidId_GetByRoomIdAndDateShouldReturnEntity()
+    {
+        //arrange
+        var tosave = new Book(_email, Guid.NewGuid(), _date);
+        var saved = _repository.Save(tosave);
+
+        //act
+        var entity = _repository.GetByRoomIdAndDate(saved.RoomId, saved.Date).ToList();
+
+        //assert
+        Assert.Equal(saved.Id, entity[0].Id);
+    }
+
     [Fact]
     public void GivenValidId_GetByIdShouldReturnEntity()
     {

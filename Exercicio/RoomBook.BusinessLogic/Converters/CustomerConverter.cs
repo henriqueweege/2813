@@ -2,7 +2,7 @@
 using RoomBooking.Domain.Converters.Contracts;
 using RoomBooking.Domain.Entities;
 
-namespace RoomBooking.Domain.Converters;
+namespace RoomBooking.DomainServices.Converters;
 
 public class CustomerConverter : IConverter<Customer, CreateCustomerCommand, UpdateCustomerCommand>
 {

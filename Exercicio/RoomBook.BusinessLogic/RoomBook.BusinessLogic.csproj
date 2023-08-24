@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RoomBooking.Entities\RoomBooking.Entities.csproj" />
     <ProjectReference Include="..\RoomBooking.InfrastructureServices\RoomBooking.InfrastructureServices.csproj" />
     <ProjectReference Include="..\RoomBooking.Infrastructure\RoomBooking.Infrastructure.csproj" />
   </ItemGroup>

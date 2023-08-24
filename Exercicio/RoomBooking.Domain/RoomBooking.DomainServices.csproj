@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application\DependencyRoomBooking.csproj" />
+    <ProjectReference Include="..\RoomBook.BusinessLogic\RoomBook.BusinessLogic.csproj" />
   </ItemGroup>
 
 </Project>

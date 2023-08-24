@@ -7,19 +7,20 @@ using RoomBooking.Domain.DataAccess.Repositories.Base.Contracts;
 using RoomBooking.Domain.Entities.Base;
 using RoomBooking.Domain.Enums;
 using RoomBooking.Domain.Enums.Extensions;
+using RoomBooking.Domain.Handlers.Base;
 using RoomBooking.Domain.Queries;
 
-namespace RoomBooking.Domain.Handlers.Base;
+namespace RoomBook.BusinessLogic.Handlers.Base;
 
-public  class CRUDHandler<E, C, CC, UC, DC, GAQ, GBIQ>
-             :BaseHandler<E,C,CC,UC,DC,GAQ,GBIQ> 
-             where E : Entity 
+public class CRUDHandler<E, C, CC, UC, DC, GAQ, GBIQ>
+             : BaseHandler<E, C, CC, UC, DC, GAQ, GBIQ>
+             where E : Entity
              where C : class, IConverter<E, CC, UC>
-             where CC : ICreateCommand 
+             where CC : ICreateCommand
              where UC : IUpdateCommand
              where DC : IDeleteCommand
              where GAQ : IGetAllQuery
-             where GBIQ : IGetByIdQuery                                                   
+             where GBIQ : IGetByIdQuery
 {
     private static IConverter<E, CC, UC> Converter { get; set; }
     private static IBaseRepository<E> Repository { get; set; }
@@ -49,13 +50,13 @@ public  class CRUDHandler<E, C, CC, UC, DC, GAQ, GBIQ>
 
     }
 
-    public  CommandResult<E> Handle(UC command)
+    public CommandResult<E> Handle(UC command)
     {
         try
         {
             var entityToUpdate = Repository.GetById(command.Id);
 
-            if(entityToUpdate is null)
+            if (entityToUpdate is null)
             {
                 return new CommandResult<E>(false, EErrorMessages.BAD_REQUEST.GetDescription());
             }
@@ -76,7 +77,7 @@ public  class CRUDHandler<E, C, CC, UC, DC, GAQ, GBIQ>
 
     }
 
-    public  CommandResult<E> Handle(DC command)
+    public CommandResult<E> Handle(DC command)
     {
         try
         {
@@ -102,7 +103,7 @@ public  class CRUDHandler<E, C, CC, UC, DC, GAQ, GBIQ>
         }
     }
 
-    public  QueryResult<E> Handle(GAQ query)
+    public QueryResult<E> Handle(GAQ query)
     {
         try
         {
@@ -124,7 +125,7 @@ public  class CRUDHandler<E, C, CC, UC, DC, GAQ, GBIQ>
         }
     }
 
-    public  QueryResult<E> Handle(GBIQ query)
+    public QueryResult<E> Handle(GBIQ query)
     {
         try
         {

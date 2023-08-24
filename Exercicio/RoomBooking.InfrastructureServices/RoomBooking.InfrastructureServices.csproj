@@ -7,8 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RoomBooking.InfrastructureServices\RoomBooking.InfrastructureServices.csproj" />
-    <ProjectReference Include="..\RoomBooking.Infrastructure\RoomBooking.Infrastructure.csproj" />
+    <ProjectReference Include="..\RoomBooking.Entities\RoomBooking.Entities.csproj" />
   </ItemGroup>
 
 </Project>

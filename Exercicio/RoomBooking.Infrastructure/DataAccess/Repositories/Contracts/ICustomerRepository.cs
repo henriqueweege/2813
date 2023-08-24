@@ -5,4 +5,6 @@ namespace RoomBooking.Domain.DataAccess.Repositories.Contracts;
 
 public interface ICustomerRepository : IBaseRepository<Customer>
 {
+    public Customer? GetByEmail(string email);
+
 }

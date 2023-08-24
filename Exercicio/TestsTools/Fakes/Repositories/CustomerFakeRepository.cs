@@ -6,4 +6,6 @@ namespace TestsTools.Fakes.Repositories;
 
 public class CustomerFakeRepository : BaseFakeRepository<Customer>, ICustomerRepository
 {
+    public Customer? GetByEmail(string email)
+        => Entities.FirstOrDefault(x => x.Email == email);
 }

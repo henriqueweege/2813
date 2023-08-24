@@ -5,4 +5,5 @@ namespace RoomBooking.Domain.DataAccess.Repositories.Contracts;
 
 public interface IBookRepository : IBaseRepository<Book>
 {
+    public IQueryable<Book>? GetByRoomIdAndDate(Guid id, DateTime date);
 }

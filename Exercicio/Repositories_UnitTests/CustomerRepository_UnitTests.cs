@@ -29,6 +29,22 @@ public class CustomerRepository_UnitTests : IDisposable
 
     }
 
+
+    [Fact]
+    public void GivenValidId_GetByEmailShouldReturnEntity()
+    {
+        //arrange
+        var email = "uniqueemail@mail.com";
+        var tosave = new Customer(email);
+        var saved = _repository.Save(tosave);
+
+        //act
+        var entity = _repository.GetByEmail(email);
+
+        //assert
+        Assert.Equal(saved.Id, entity.Id);
+    }
+
     [Fact]
     public void GivenValidId_GetByIdShouldReturnEntity()
     {
