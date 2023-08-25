@@ -1,7 +1,7 @@
-﻿using RoomBook.BusinessLogic.Commands.RoomCommands;
-using RoomBook.BusinessLogic.Converters;
-using RoomBook.BusinessLogic.Handlers;
-using RoomBook.BusinessLogic.Queries.RoomQueries;
+﻿using RoomBooking.BusinessLogic.Commands.RoomCommands;
+using RoomBooking.BusinessLogic.Converters;
+using RoomBooking.BusinessLogic.Handlers;
+using RoomBooking.BusinessLogic.Queries.RoomQueries;
 using RoomBooking.Entities.Entities;
 using TestsTools.Fakes.Repositories;
 

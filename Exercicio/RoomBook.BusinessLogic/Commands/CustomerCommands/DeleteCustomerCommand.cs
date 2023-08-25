@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using RoomBook.BusinessLogic.Commands.Contracts;
+using RoomBooking.BusinessLogic.Commands.Contracts;
 using RoomBooking.Entities.Entities;
 
-namespace RoomBook.BusinessLogic.Commands.CustomerCommands;
+namespace RoomBooking.BusinessLogic.Commands.CustomerCommands;
 
 public class DeleteCustomerCommand : IDeleteCommand, IRequest<CommandResult<Customer>>
 {

@@ -1,15 +1,15 @@
 ﻿using MediatR;
-using RoomBook.BusinessLogic.Commands;
-using RoomBook.BusinessLogic.Commands.CustomerCommands;
-using RoomBook.BusinessLogic.Converters;
-using RoomBook.BusinessLogic.Converters.Contracts;
-using RoomBook.BusinessLogic.Handlers.Base;
-using RoomBook.BusinessLogic.Queries;
-using RoomBook.BusinessLogic.Queries.CustomerQueries;
+using RoomBooking.BusinessLogic.Commands;
+using RoomBooking.BusinessLogic.Commands.CustomerCommands;
+using RoomBooking.BusinessLogic.Converters;
+using RoomBooking.BusinessLogic.Converters.Contracts;
+using RoomBooking.BusinessLogic.Handlers.Base;
+using RoomBooking.BusinessLogic.Queries;
+using RoomBooking.BusinessLogic.Queries.CustomerQueries;
 using RoomBooking.Entities.Entities;
 using RoomBooking.Infrastructure.DataAccess.Repositories.Contracts;
 
-namespace RoomBook.BusinessLogic.Handlers;
+namespace RoomBooking.BusinessLogic.Handlers;
 
 public class CustomerHandler : CRUDHandler<Customer, CustomerConverter,
                                            CreateCustomerCommand, UpdateCustomerCommand, DeleteCustomerCommand,
@@ -22,7 +22,7 @@ public class CustomerHandler : CRUDHandler<Customer, CustomerConverter,
 {
 
 
-    public CustomerHandler(IConverter<Customer, CreateCustomerCommand, UpdateCustomerCommand> converter, ICustomerRepository repository) : base(converter, repository){ }
+    public CustomerHandler(IConverter<Customer, CreateCustomerCommand, UpdateCustomerCommand> converter, ICustomerRepository repository) : base(converter, repository) { }
 
     public Task<CommandResult<Customer>> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
         => Task.FromResult(Handle(request));

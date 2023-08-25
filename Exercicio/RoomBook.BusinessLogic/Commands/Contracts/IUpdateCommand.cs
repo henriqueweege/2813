@@ -1,4 +1,4 @@
-﻿namespace RoomBook.BusinessLogic.Commands.Contracts;
+﻿namespace RoomBooking.BusinessLogic.Commands.Contracts;
 
 public interface IUpdateCommand
 {

@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RoomBook.BusinessLogic\RoomBook.BusinessLogic.csproj" />
+    <ProjectReference Include="..\RoomBook.BusinessLogic\RoomBooking.BusinessLogic.csproj" />
   </ItemGroup>
 
 </Project>

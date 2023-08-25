@@ -33,7 +33,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomBooking.Infrastructure"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomBooking.Entities", "RoomBooking.Entities\RoomBooking.Entities.csproj", "{1954E77C-E928-4C7B-86A9-3F249A6F412C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomBook.BusinessLogic", "RoomBook.BusinessLogic\RoomBook.BusinessLogic.csproj", "{DB5649D4-5E53-45B4-A703-66B2E7A73CCC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomBooking.BusinessLogic", "RoomBook.BusinessLogic\RoomBooking.BusinessLogic.csproj", "{DB5649D4-5E53-45B4-A703-66B2E7A73CCC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomBooking.InfrastructureServices", "RoomBooking.InfrastructureServices\RoomBooking.InfrastructureServices.csproj", "{3A7F6DB4-F7D3-4DDE-BB7F-EA7B4D682802}"
 EndProject

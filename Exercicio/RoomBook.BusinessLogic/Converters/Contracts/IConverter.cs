@@ -1,7 +1,7 @@
-﻿using RoomBook.BusinessLogic.Commands.Contracts;
+﻿using RoomBooking.BusinessLogic.Commands.Contracts;
 using RoomBooking.Entities.Entities.Base;
 
-namespace RoomBook.BusinessLogic.Converters.Contracts;
+namespace RoomBooking.BusinessLogic.Converters.Contracts;
 
 public interface IConverter<E, CC, UC> where E : Entity where CC : ICreateCommand where UC : IUpdateCommand
 {

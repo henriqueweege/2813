@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using RoomBook.BusinessLogic.Commands.BookCommands;
-using RoomBook.BusinessLogic.Commands.CustomerCommands;
-using RoomBook.BusinessLogic.Commands.RoomCommands;
-using RoomBook.BusinessLogic.Converters;
-using RoomBook.BusinessLogic.Converters.Contracts;
+using RoomBooking.BusinessLogic.Commands.BookCommands;
+using RoomBooking.BusinessLogic.Commands.CustomerCommands;
+using RoomBooking.BusinessLogic.Commands.RoomCommands;
+using RoomBooking.BusinessLogic.Converters;
+using RoomBooking.BusinessLogic.Converters.Contracts;
 using RoomBooking.Entities.Entities;
 using RoomBooking.Infrastructure.DataAccess.Data;
 using RoomBooking.Infrastructure.DataAccess.Data.Contracts;
@@ -16,6 +16,7 @@ using System.Reflection;
 
 namespace DependencyRoomBooking.Extensions;
 
+#pragma warning disable 1591
 public static class DependenciesExtensions
 {
     public static void AddRepositories(this IServiceCollection services)

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace RoomBook.BusinessLogic.Enums;
+namespace RoomBooking.BusinessLogic.Enums;
 
 public enum EErrorMessages
 {

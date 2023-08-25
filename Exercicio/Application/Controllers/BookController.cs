@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using RoomBook.BusinessLogic.Commands;
-using RoomBook.BusinessLogic.Commands.BookCommands;
-using RoomBook.BusinessLogic.Queries.BookQueries;
+using RoomBooking.BusinessLogic.Commands;
+using RoomBooking.BusinessLogic.Commands.BookCommands;
+using RoomBooking.BusinessLogic.Queries.BookQueries;
 using RoomBooking.Entities.Entities;
 
 namespace DependencyRoomBooking.Controllers;
@@ -31,7 +31,7 @@ public class BookController : ControllerBase
     [ProducesResponseType(typeof(CommandResult<Book>), StatusCodes.Status200OK)]
     [HttpGet]
     public IActionResult GetById([FromQuery] Guid id, [FromServices] IMediator mediator)
-        => Return(mediator.Send(new GetByIdBookQuery() { Id = id}).Result);
+        => Return(mediator.Send(new GetByIdBookQuery() { Id = id }).Result);
     /// <summary>
     /// Get all book register.
     /// </summary>

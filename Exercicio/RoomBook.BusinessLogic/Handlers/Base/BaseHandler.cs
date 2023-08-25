@@ -1,10 +1,10 @@
-﻿using RoomBook.BusinessLogic.Commands;
-using RoomBook.BusinessLogic.Commands.Contracts;
-using RoomBook.BusinessLogic.Converters.Contracts;
-using RoomBook.BusinessLogic.Queries.Contracts;
+﻿using RoomBooking.BusinessLogic.Commands;
+using RoomBooking.BusinessLogic.Commands.Contracts;
+using RoomBooking.BusinessLogic.Converters.Contracts;
+using RoomBooking.BusinessLogic.Queries.Contracts;
 using RoomBooking.Entities.Entities.Base;
 
-namespace RoomBook.BusinessLogic.Handlers.Base;
+namespace RoomBooking.BusinessLogic.Handlers.Base;
 
 public abstract class BaseHandler<E,
                          C,

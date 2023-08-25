@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using RoomBook.BusinessLogic.Commands.Contracts;
+using RoomBooking.BusinessLogic.Commands.Contracts;
 using RoomBooking.Entities.Entities;
 using RoomBooking.Entities.ValueObjects;
 
-namespace RoomBook.BusinessLogic.Commands.BookCommands;
+namespace RoomBooking.BusinessLogic.Commands.BookCommands;
 
 public class CreateBookCommand : ICreateCommand, IRequest<CommandResult<Book>>
 {

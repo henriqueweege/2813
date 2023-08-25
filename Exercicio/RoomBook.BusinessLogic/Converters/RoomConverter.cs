@@ -1,8 +1,8 @@
-﻿using RoomBook.BusinessLogic.Commands.RoomCommands;
-using RoomBook.BusinessLogic.Converters.Contracts;
+﻿using RoomBooking.BusinessLogic.Commands.RoomCommands;
+using RoomBooking.BusinessLogic.Converters.Contracts;
 using RoomBooking.Entities.Entities;
 
-namespace RoomBook.BusinessLogic.Converters;
+namespace RoomBooking.BusinessLogic.Converters;
 
 public class RoomConverter : IConverter<Room, CreateRoomCommand, UpdateRoomCommand>
 {

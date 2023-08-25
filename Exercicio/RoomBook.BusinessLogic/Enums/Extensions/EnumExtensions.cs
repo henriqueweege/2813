@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace RoomBook.BusinessLogic.Enums.Extensions;
+namespace RoomBooking.BusinessLogic.Enums.Extensions;
 
 public static class EnumExtensions
 {

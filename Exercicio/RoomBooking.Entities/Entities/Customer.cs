@@ -8,7 +8,7 @@ public class Customer : Entity
     public string Email { get; private set; }
     public Customer(string email)
     {
-       ChangeEmail(email);
+        ChangeEmail(email);
     }
 
     #region Change Methods

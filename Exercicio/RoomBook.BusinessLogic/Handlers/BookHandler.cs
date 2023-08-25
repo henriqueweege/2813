@@ -1,21 +1,18 @@
 ﻿using MediatR;
-using RoomBook.BusinessLogic.Commands;
-using RoomBook.BusinessLogic.Commands.BookCommands;
-using RoomBook.BusinessLogic.Converters;
-using RoomBook.BusinessLogic.Converters.Contracts;
-using RoomBook.BusinessLogic.Enums;
-using RoomBook.BusinessLogic.Enums.Extensions;
-using RoomBook.BusinessLogic.Handlers.Base;
-using RoomBook.BusinessLogic.Queries;
-using RoomBook.BusinessLogic.Queries.BookQueries;
+using RoomBooking.BusinessLogic.Commands;
+using RoomBooking.BusinessLogic.Commands.BookCommands;
+using RoomBooking.BusinessLogic.Converters;
+using RoomBooking.BusinessLogic.Converters.Contracts;
+using RoomBooking.BusinessLogic.Enums;
+using RoomBooking.BusinessLogic.Enums.Extensions;
+using RoomBooking.BusinessLogic.Handlers.Base;
+using RoomBooking.BusinessLogic.Queries;
+using RoomBooking.BusinessLogic.Queries.BookQueries;
 using RoomBooking.Entities.Entities;
 using RoomBooking.Infrastructure.DataAccess.Repositories.Contracts;
 using RoomBooking.InfrastructureServices.PaymentServices.Contract;
-using System;
-using System.Reflection.Metadata.Ecma335;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
-namespace RoomBook.BusinessLogic.Handlers;
+namespace RoomBooking.BusinessLogic.Handlers;
 
 public class BookHandler : CRUDHandler<Book, BookConverter,
                                            CreateBookCommand, UpdateBookCommand, DeleteBookCommand,
@@ -35,8 +32,8 @@ public class BookHandler : CRUDHandler<Book, BookConverter,
 
     public BookHandler(IConverter<Book, CreateBookCommand, UpdateBookCommand> converter,
                        IBookRepository bookRepository,
-                       ICustomerRepository customerRepository, 
-                       IRoomRepository roomRepository,  
+                       ICustomerRepository customerRepository,
+                       IRoomRepository roomRepository,
                        IPaymentServices paymentServices) : base(converter, bookRepository)
     {
         _bookRepository = bookRepository;
@@ -55,12 +52,12 @@ public class BookHandler : CRUDHandler<Book, BookConverter,
                 return customerValidated;
 
             var bookAndRoomValidated = ValidateBookAndRoom(command.RoomId, command.Day);
-            
-            if(bookAndRoomValidated is not null)
+
+            if (bookAndRoomValidated is not null)
                 return bookAndRoomValidated;
 
-             // Tenta fazer um pagamento
-             var successPayment = _paymentServices.SendPaymentRequest(command.Email, command.CreditCard);
+            // Tenta fazer um pagamento
+            var successPayment = _paymentServices.SendPaymentRequest(command.Email, command.CreditCard);
 
             // Se o pagamento não for realizado com sucesso
             if (!successPayment)

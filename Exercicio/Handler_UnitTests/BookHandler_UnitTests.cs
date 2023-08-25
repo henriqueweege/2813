@@ -1,7 +1,7 @@
-﻿using RoomBook.BusinessLogic.Commands.BookCommands;
-using RoomBook.BusinessLogic.Converters;
-using RoomBook.BusinessLogic.Handlers;
-using RoomBook.BusinessLogic.Queries.BookQueries;
+﻿using RoomBooking.BusinessLogic.Commands.BookCommands;
+using RoomBooking.BusinessLogic.Converters;
+using RoomBooking.BusinessLogic.Handlers;
+using RoomBooking.BusinessLogic.Queries.BookQueries;
 using RoomBooking.Entities.Entities;
 using RoomBooking.Entities.ValueObjects;
 using RoomBooking.InfrastructureServices.PaymentServices.Contract;
@@ -106,7 +106,6 @@ public class BookHandler_UnitTests
         var newRoom = _roomFakeRepository.Save(new Room("name"));
 
         var newDate = DateTime.Now.AddDays(1.0);
-
 
         var entityToUpdate = _bookFakeRepository.Save(new Book(email, room.Id, date));
         var command = new UpdateBookCommand()

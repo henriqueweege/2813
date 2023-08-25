@@ -1,14 +1,14 @@
-﻿using RoomBook.BusinessLogic.Commands;
-using RoomBook.BusinessLogic.Commands.Contracts;
-using RoomBook.BusinessLogic.Converters.Contracts;
-using RoomBook.BusinessLogic.Enums;
-using RoomBook.BusinessLogic.Enums.Extensions;
-using RoomBook.BusinessLogic.Queries;
-using RoomBook.BusinessLogic.Queries.Contracts;
+﻿using RoomBooking.BusinessLogic.Commands;
+using RoomBooking.BusinessLogic.Commands.Contracts;
+using RoomBooking.BusinessLogic.Converters.Contracts;
+using RoomBooking.BusinessLogic.Enums;
+using RoomBooking.BusinessLogic.Enums.Extensions;
+using RoomBooking.BusinessLogic.Queries;
+using RoomBooking.BusinessLogic.Queries.Contracts;
 using RoomBooking.Entities.Entities.Base;
 using RoomBooking.Infrastructure.DataAccess.Repositories.Base.Contracts;
 
-namespace RoomBook.BusinessLogic.Handlers.Base;
+namespace RoomBooking.BusinessLogic.Handlers.Base;
 
 public class CRUDHandler<E, C, CC, UC, DC, GAQ, GBIQ>
              : BaseHandler<E, C, CC, UC, DC, GAQ, GBIQ>
@@ -41,7 +41,7 @@ public class CRUDHandler<E, C, CC, UC, DC, GAQ, GBIQ>
             }
             return new CommandResult<E>(true, ESuccessMessages.OK_REQUISITON_COMPLETED_SUCCESSFULLY.GetDescription(), entity);
         }
-        catch(ArgumentException ex)
+        catch (ArgumentException ex)
         {
             return new CommandResult<E>(false, $"BadRequest: {ex.Message}");
         }

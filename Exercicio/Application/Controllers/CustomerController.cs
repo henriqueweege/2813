@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using RoomBook.BusinessLogic.Commands;
-using RoomBook.BusinessLogic.Commands.CustomerCommands;
-using RoomBook.BusinessLogic.Queries.CustomerQueries;
+using RoomBooking.BusinessLogic.Commands;
+using RoomBooking.BusinessLogic.Commands.CustomerCommands;
+using RoomBooking.BusinessLogic.Queries.CustomerQueries;
 using RoomBooking.Entities.Entities;
 
 namespace DependencyRoomBooking.Controllers;
