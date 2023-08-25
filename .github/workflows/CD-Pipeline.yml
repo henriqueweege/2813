@@ -17,7 +17,7 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore ./Exercicio/DependencyRoomBooking.sln
       - name: Build
-        run: dotnet build --no-restore
+        run: dotnet build --no-restore ./Exercicio/DependencyRoomBooking.sln
       - name: Repositories Tests
         run: dotnet test --no-build --verbosity normal ./Exercicio/Repositories_UnitTests/Repositories_UnitTests.csproj
       - name: Converters Tests
