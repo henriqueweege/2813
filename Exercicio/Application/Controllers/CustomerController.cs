@@ -13,7 +13,7 @@ namespace DependencyRoomBooking.Controllers;
 public class CustomerController : ControllerBase
 {
     /// <summary>
-    /// Customer a room.
+    /// Create a customer.
     /// </summary>
     [Produces("application/json")]
     [ProducesResponseType(typeof(CommandResult<Customer>), StatusCodes.Status500InternalServerError)]
@@ -23,7 +23,7 @@ public class CustomerController : ControllerBase
     public IActionResult PostCustomer([FromBody] CreateCustomerCommand command, [FromServices] IMediator mediator)
         => Return(mediator.Send(command).Result);
     /// <summary>
-    /// Get a book register by id.
+    /// Get customer by id.
     /// </summary>
     [Produces("application/json")]
     [ProducesResponseType(typeof(CommandResult<Customer>), StatusCodes.Status500InternalServerError)]
@@ -33,7 +33,7 @@ public class CustomerController : ControllerBase
     public IActionResult GetById([FromQuery] Guid id, [FromServices] IMediator mediator)
         => Return(mediator.Send(new GetByIdCustomerQuery() { Id = id }).Result);
     /// <summary>
-    /// Get all book register.
+    /// Get all customers.
     /// </summary>
     [Produces("application/json")]
     [ProducesResponseType(typeof(CommandResult<Customer>), StatusCodes.Status500InternalServerError)]
@@ -43,7 +43,7 @@ public class CustomerController : ControllerBase
     public IActionResult GetAll([FromServices] IMediator mediator)
         => Return(mediator.Send(new GetAllCustomerQuery()).Result);
     /// <summary>
-    /// Update a book register.
+    /// Update a customer.
     /// </summary>
     [Produces("application/json")]
     [ProducesResponseType(typeof(CommandResult<Customer>), StatusCodes.Status500InternalServerError)]
@@ -53,7 +53,7 @@ public class CustomerController : ControllerBase
     public IActionResult Put([FromBody] UpdateCustomerCommand command, [FromServices] IMediator mediator)
         => Return(mediator.Send(command).Result);
     /// <summary>
-    /// Delete a book register.
+    /// Delete a customer.
     /// </summary>
     [Produces("application/json")]
     [ProducesResponseType(typeof(CommandResult<Customer>), StatusCodes.Status500InternalServerError)]

@@ -13,7 +13,7 @@ namespace DependencyRoomBooking.Controllers;
 public class RoomController : ControllerBase
 {
     /// <summary>
-    /// Room a room.
+    /// Create a room.
     /// </summary>
     [Produces("application/json")]
     [ProducesResponseType(typeof(CommandResult<Room>), StatusCodes.Status500InternalServerError)]
@@ -23,7 +23,7 @@ public class RoomController : ControllerBase
     public IActionResult PostRoom([FromBody] CreateRoomCommand command, [FromServices] IMediator mediator)
         => Return(mediator.Send(command).Result);
     /// <summary>
-    /// Get a book register by id.
+    /// Get room by id.
     /// </summary>
     [Produces("application/json")]
     [ProducesResponseType(typeof(CommandResult<Room>), StatusCodes.Status500InternalServerError)]
@@ -33,7 +33,7 @@ public class RoomController : ControllerBase
     public IActionResult GetById([FromQuery] Guid id, [FromServices] IMediator mediator)
         => Return(mediator.Send(new GetByIdRoomQuery() { Id = id }).Result);
     /// <summary>
-    /// Get all book register.
+    /// Get all rooms.
     /// </summary>
     [Produces("application/json")]
     [ProducesResponseType(typeof(CommandResult<Room>), StatusCodes.Status500InternalServerError)]
@@ -43,7 +43,7 @@ public class RoomController : ControllerBase
     public IActionResult GetAll([FromServices] IMediator mediator)
         => Return(mediator.Send(new GetAllRoomQuery()).Result);
     /// <summary>
-    /// Update a book register.
+    /// Update room.
     /// </summary>
     [Produces("application/json")]
     [ProducesResponseType(typeof(CommandResult<Room>), StatusCodes.Status500InternalServerError)]
@@ -53,7 +53,7 @@ public class RoomController : ControllerBase
     public IActionResult Put([FromBody] UpdateRoomCommand command, [FromServices] IMediator mediator)
         => Return(mediator.Send(command).Result);
     /// <summary>
-    /// Delete a book register.
+    /// Delete room.
     /// </summary>
     [Produces("application/json")]
     [ProducesResponseType(typeof(CommandResult<Room>), StatusCodes.Status500InternalServerError)]
