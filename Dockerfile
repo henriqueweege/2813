@@ -1,13 +1,14 @@
-FROM mcr.microsoft.com/dotnet/sdk:latest AS base
-WORKDIR /app
+﻿
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS base
+WORKDIR .
 EXPOSE 80
 
-
-FROM mcr.microsoft.com/dotnet/sdk:latest AS build
-WORKDIR /src
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR .
 COPY . .
 RUN dotnet restore "./Exercicio/Application/DependencyRoomBooking.csproj"
-RUN dotnet build "./Exercicio/Application/DependencyRoomBooking.csproj" -c Debug -o /app/build
+RUN dotnet build "./Exercicio/Application/DependencyRoomBooking.csproj" -c Debug -o ./app/build
+COPY . .
 
 FROM build AS publish
 RUN dotnet publish "./Exercicio/Application/DependencyRoomBooking.csproj" -c Debug -o  ./app/publish
