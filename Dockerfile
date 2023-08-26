@@ -14,4 +14,4 @@ RUN dotnet publish "./Exercicio/Application/DependencyRoomBooking.csproj" -c Deb
 FROM base AS final
 WORKDIR .
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "DependencyRoomBooking.dll"]
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet DependencyRoomBooking.dll
