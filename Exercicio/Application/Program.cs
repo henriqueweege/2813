@@ -10,11 +10,11 @@ builder.Services.AddDbContext();
 builder.Services.AddInfrastructureServices();
 builder.Services.AddMediatR();
 builder.Services.AddSwagger();
-
 builder.Services.AddControllers();
 
 var app = builder.Build();
 
+app.UseHttpsRedirection();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
