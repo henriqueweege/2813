@@ -58,7 +58,7 @@ public static class DependenciesExtensions
             {
 
                 Version = "1.0.0",
-                Title = "Dependency Room Booking teste para ver se muda no heroku",
+                Title = "Dependency Room Booking",
             });
             var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
