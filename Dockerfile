@@ -11,4 +11,4 @@ RUN dotnet build "./Exercicio/Application/DependencyRoomBooking.csproj" -c Debug
 FROM base AS final
 WORKDIR /app
 COPY . .
-CMD ASPNETCORE_URLS=http://*:$PORT dotnet DependencyRoomBooking.dll
+CMD ASPNETCORE_URLS=https://*:$PORT dotnet DependencyRoomBooking.dll
