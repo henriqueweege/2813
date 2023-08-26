@@ -7,11 +7,8 @@ WORKDIR /src
 COPY . .
 RUN dotnet restore "./Exercicio/Application/DependencyRoomBooking.csproj"
 RUN dotnet build "./Exercicio/Application/DependencyRoomBooking.csproj" -c Debug -o /app/build
-FROM build AS publish
 
-RUN dotnet publish "./Exercicio/Application/DependencyRoomBooking.csproj" -c Debug -o /app/publish
 FROM base AS final
 WORKDIR /app
-
-COPY --from=publish /app/publish .
+COPY . .
 ENTRYPOINT ["dotnet", "DependencyRoomBooking.dll"]
