@@ -2,7 +2,6 @@ FROM mcr.microsoft.com/dotnet/sdk:latest AS base
 WORKDIR /app
 EXPOSE 80
 
-
 FROM mcr.microsoft.com/dotnet/sdk:latest AS build
 WORKDIR /src
 COPY . .
