@@ -1,5 +1,5 @@
 ﻿using RoomBooking.Entities.Entities;
-using RoomBooking.Infrastructure.DataAccess.Data.Contracts;
+using RoomBooking.Infrastructure.DataAccess.Context.Contracts;
 using RoomBooking.Infrastructure.DataAccess.Repositories.Base;
 using RoomBooking.Infrastructure.DataAccess.Repositories.Contracts;
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RoomBooking.Entities.Entities.Base;
-using RoomBooking.Infrastructure.DataAccess.Data;
-using RoomBooking.Infrastructure.DataAccess.Data.Contracts;
+using RoomBooking.Infrastructure.DataAccess.Context;
+using RoomBooking.Infrastructure.DataAccess.Context.Contracts;
 using RoomBooking.Infrastructure.DataAccess.Repositories.Base.Contracts;
 
 namespace RoomBooking.Infrastructure.DataAccess.Repositories.Base;

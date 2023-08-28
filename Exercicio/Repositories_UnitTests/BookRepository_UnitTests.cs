@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RoomBooking.Entities.Entities;
-using RoomBooking.Infrastructure.DataAccess.Data;
+using RoomBooking.Infrastructure.DataAccess.Context;
 using RoomBooking.Infrastructure.DataAccess.Repositories;
 
 namespace Repositories_UnitTests;

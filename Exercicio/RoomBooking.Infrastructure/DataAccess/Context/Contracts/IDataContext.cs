@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace RoomBooking.Infrastructure.DataAccess.Data.Contracts;
+namespace RoomBooking.Infrastructure.DataAccess.Context.Contracts;
 
 public interface IDataContext : IDisposable
 {

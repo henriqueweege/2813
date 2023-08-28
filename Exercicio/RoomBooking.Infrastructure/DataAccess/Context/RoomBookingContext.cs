@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RoomBooking.Entities.Entities;
-using RoomBooking.Infrastructure.DataAccess.Data.Contracts;
+using RoomBooking.Infrastructure.DataAccess.Context.Contracts;
 
-namespace RoomBooking.Infrastructure.DataAccess.Data;
+namespace RoomBooking.Infrastructure.DataAccess.Context;
 
 
 public class RoomBookingContext : DbContext, IDataContext
