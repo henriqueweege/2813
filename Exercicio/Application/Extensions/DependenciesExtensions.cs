@@ -21,6 +21,7 @@ public static class DependenciesExtensions
 {
     public static void AddRepositories(this IServiceCollection services)
     {
+
         services.AddTransient<IBookRepository, BookRepository>();
         services.AddTransient<IRoomRepository, RoomRepository>();
         services.AddTransient<ICustomerRepository, CustomerRepository>();
